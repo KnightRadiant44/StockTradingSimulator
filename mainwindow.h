@@ -1,8 +1,12 @@
 // mainwindow.h
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include "TradingBot.h"
 #include <QMainWindow>
+#include <QThread>
+#include <QTimer>
+#include <QDir>
+#include <QStandardPaths>
+#include "TradingBot.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -17,16 +21,19 @@ public:
 private slots:
     void on_exitButton_clicked();
     void onConfirmButtonClicked();
-    void updateUIFromBot(); // Add this line
+    void updateUIFromBot();
+    void executeNextTradingDay();
+    void onSimulationComplete();
 
 
 private:
     Ui::MainWindow *ui;
-    QThread* simulationThread;
+    TradingBot *tradingBot;
     QTimer* updateTimer;
-    TradingBot tradingBot;
-
     void ValuesSet();
+    int getSelectedStrategyIndex() const;
+    int getSelectedDays() const;
+
 
     // Member variables
     double balance;
