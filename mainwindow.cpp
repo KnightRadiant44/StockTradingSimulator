@@ -70,19 +70,6 @@ void MainWindow::ValuesSet()
     ui->PNLnumLastUpdate->setNum(tradingBot->getProfitLossSinceLastUpdate());
     ui->DayNum->setNum(tradingBot->getCurrentDay());
 
-    // Update text showing actions since last update
-    QString LastUpdateText = QString("Buys: %1, Sells: %2, Holds: %3")
-                                 .arg(tradingBot->getLastBuys())
-                                 .arg(tradingBot->getLastSells())
-                                 .arg(tradingBot->getLastHolds());
-    ui->ActionsSinceLastUpdateNum->setText(LastUpdateText);
-
-    // Update total actions text
-    QString ActionsInfo = QString("Buys: %1, Sells: %2, Holds: %3")
-                              .arg(tradingBot->getTotalBuys())
-                              .arg(tradingBot->getTotalSells())
-                              .arg(tradingBot->getTotalHolds());
-    ui->TotalActionsNum->setText(ActionsInfo);
 }
 
 // Slot function triggered when the Start Simulation button is clicked

@@ -15,14 +15,14 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(const QString &username, QWidget *parent = nullptr);
     ~MainWindow();
-
+    void on_exitButton_clicked();
+    void on_HelpButton_clicked();
 private slots:
     void onConfirmButtonClicked();
     void executeNextTradingDay();
     void updateUIFromBot();
     void onSimulationComplete();
-    void on_exitButton_clicked();
-    void on_HelpButton_clicked();
+
 
 
 

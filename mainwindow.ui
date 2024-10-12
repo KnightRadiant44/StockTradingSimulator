@@ -1145,54 +1145,6 @@
      <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="ActionsUpdate">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>610</y>
-      <width>181</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Actions Since Last Update:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignmentFlag::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="TotalActions">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>660</y>
-      <width>181</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Total Actions:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignmentFlag::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="TotalActionsNum">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>690</y>
-      <width>181</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>None</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignmentFlag::AlignCenter</set>
-    </property>
-   </widget>
    <widget class="QLabel" name="PerformanceMetrics">
     <property name="geometry">
      <rect>
@@ -1466,22 +1418,6 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="ActionsSinceLastUpdateNum">
-    <property name="geometry">
-     <rect>
-      <x>5</x>
-      <y>630</y>
-      <width>181</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>None</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignmentFlag::AlignCenter</set>
-    </property>
-   </widget>
    <widget class="QLabel" name="DayNum">
     <property name="geometry">
      <rect>
@@ -1577,9 +1513,6 @@
    <zorder>MarketEvent</zorder>
    <zorder>PNLsinceStart</zorder>
    <zorder>PNL_LastUpdate</zorder>
-   <zorder>ActionsUpdate</zorder>
-   <zorder>TotalActions</zorder>
-   <zorder>TotalActionsNum</zorder>
    <zorder>PerformanceMetrics</zorder>
    <zorder>PerformaceMetricLine</zorder>
    <zorder>CumReturn</zorder>
@@ -1599,7 +1532,6 @@
    <zorder>PNLnum</zorder>
    <zorder>PNLnumLastUpdate</zorder>
    <zorder>PnlLastUpdate</zorder>
-   <zorder>ActionsSinceLastUpdateNum</zorder>
    <zorder>DayNum</zorder>
    <zorder>HelpButton</zorder>
    <zorder>PNLnum_2</zorder>
@@ -1608,7 +1540,7 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="NumDay"/>
   <buttongroup name="TradeStrats"/>
+  <buttongroup name="NumDay"/>
  </buttongroups>
 </ui>

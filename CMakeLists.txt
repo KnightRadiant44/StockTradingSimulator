@@ -36,6 +36,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         RandomStrategy.h
         MovingAvg.h
         RiskManagement.h
+        helpwindow.h
         TradingBot.h
         TradingBot.cpp
 
