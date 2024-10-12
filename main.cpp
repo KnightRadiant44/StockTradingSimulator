@@ -31,5 +31,16 @@ int main(int argc, char *argv[])
         qDebug() << "Login canceled or failed";
     }
 
+    int strategyChoice = 0;
+    int NumOfDays      = 0;
+    int NumOfUpdates   = 0;
+
+
+
+
+
+
+
+
     return 0;
 }

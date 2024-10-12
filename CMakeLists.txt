@@ -37,7 +37,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MovingAvg.h
         RiskManagement.h
         TradingBot.h
-        trades_taken.txt
+        TradingBot.cpp
 
 
 

@@ -10,7 +10,7 @@
 // Constructor for the MainWindow class
 MainWindow::MainWindow(const QString &username, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow),
-    updateTimer(nullptr)
+    updateTimer(nullptr), tradingBot(nullptr)
 {
     ui->setupUi(this); // Setup the UI elements
     ui->UserName->setText(username); // Set the username display
@@ -62,6 +62,7 @@ void MainWindow::ValuesSet()
     ui->CurrentStrategyNum->setText(QString::fromStdString(tradingBot->getCurrentStrategyName()));
 
     ui->CurrentBalanceNum->setNum(tradingBot->getBalance());
+    ui->PNLnum_2->setNum(tradingBot->getProfitLossSinceStart());
     ui->PNLnum->setNum(tradingBot->getProfitLossSinceStart());
     ui->PNLnumLastUpdate->setNum(tradingBot->getProfitLossSinceLastUpdate());
     ui->DayNum->setNum(tradingBot->getCurrentDay());
@@ -107,7 +108,7 @@ void MainWindow::onConfirmButtonClicked()
         updateTimer = new QTimer(this);
         connect(updateTimer, &QTimer::timeout, this, &MainWindow::executeNextTradingDay);
     }
-    updateTimer->start(10); // Execute a day evey 0.01 seconds or 10 milliseconds
+    updateTimer->start(10); // Execute a day every 0.01 seconds or 10 milliseconds
 }
 
 // Function to execute the next trading day
@@ -133,7 +134,7 @@ void MainWindow::onSimulationComplete()
 {
     QMessageBox::information(this, "Simulation Complete", "The trading simulation has finished.");
 
-    QFile Trades("C:\\Users\\shahi\\OneDrive - University of Adelaide\\2024S2\\OOP\\TRADE UI - backup - test\\trades_taken.txt");
+    QFile Trades("//Users//shxhid01//Library//CloudStorage//OneDrive-UniversityofAdelaide//2024S2//OOP//TradingSimulation-UI-QT//trades_taken.txt");
     if(!Trades.open(QIODevice::ReadOnly))
         QMessageBox::information(0,"Trades", Trades.errorString());
     QTextStream in(&Trades);

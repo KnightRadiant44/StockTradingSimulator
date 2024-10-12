@@ -1,11 +1,9 @@
 // mainwindow.h
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+
 #include <QMainWindow>
-#include <QThread>
 #include <QTimer>
-#include <QDir>
-#include <QStandardPaths>
 #include "TradingBot.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,29 +17,27 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_exitButton_clicked();
     void onConfirmButtonClicked();
-    void updateUIFromBot();
     void executeNextTradingDay();
+    void updateUIFromBot();
     void onSimulationComplete();
-
+    void on_exitButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     TradingBot *tradingBot;
-    QTimer* updateTimer;
+    QTimer *updateTimer;
+
     void ValuesSet();
     int getSelectedStrategyIndex() const;
     int getSelectedDays() const;
-
-
     // Member variables
-    double balance;
+    int balance;
     int StocksOwned;
     int DayNum;
-    double CurrentPrice;
-    double CurrentBalance;
-    double TotalCurrenValue;
+    int CurrentPrice;
+    int CurrentBalance;
+    int TotalCurrenValue;
     double Volatility;
     double CumulativeReturn;
     double MaximumDrawDown;
@@ -49,13 +45,15 @@ private:
     double MarketVolatility;
     std::string CurrentStrategy;
     std::string MarketEvent;
+
+    // Actions
     int Buys, Sells, Hold;
     int LastBuys, LastSells, LastHolds;
-    double ProfitLossSinceStart;
-    double ProfitLossSinceLastUpdate;
+    int ProfitLossSinceStart, ProfitLossSinceLastUpdate;
     int NumDay;
     int strategyChoice;
     int NumOfDays;
     int NumOfUpdates;
 };
+
 #endif // MAINWINDOW_H

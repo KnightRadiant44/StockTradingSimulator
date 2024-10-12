@@ -23,7 +23,6 @@ private slots:
     void onCreateAccountClicked();
 
 private:
-    void writeLog(const QString &message);
     QLineEdit *usernameEdit;
     QLineEdit *passwordEdit;
     QPushButton *loginButton;

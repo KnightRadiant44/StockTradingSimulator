@@ -759,7 +759,7 @@
      <rect>
       <x>5</x>
       <y>55</y>
-      <width>180</width>
+      <width>91</width>
       <height>25</height>
      </rect>
     </property>
@@ -903,23 +903,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="ProfitNum">
-    <property name="geometry">
-     <rect>
-      <x>97</x>
-      <y>55</y>
-      <width>101</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>0</string>
     </property>
    </widget>
    <widget class="QTextBrowser" name="TradesTakenBox">
@@ -1302,7 +1289,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>13%</string>
+     <string>0%</string>
     </property>
    </widget>
    <widget class="QLabel" name="MaxDrawDownNum">
@@ -1315,7 +1302,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>1</string>
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="VolatilityNum">
@@ -1535,6 +1522,19 @@
      <string>Help</string>
     </property>
    </widget>
+   <widget class="QLabel" name="PNLnum_2">
+    <property name="geometry">
+     <rect>
+      <x>101</x>
+      <y>55</y>
+      <width>81</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
    <zorder>BuyAndHold</zorder>
    <zorder>TradingStrats</zorder>
    <zorder>MeanReversion</zorder>
@@ -1564,7 +1564,6 @@
    <zorder>UserName</zorder>
    <zorder>StockNum</zorder>
    <zorder>Bal_User</zorder>
-   <zorder>ProfitNum</zorder>
    <zorder>TradesTakenBox</zorder>
    <zorder>DaysForUpdate</zorder>
    <zorder>NumOfUpdates</zorder>
@@ -1603,12 +1602,13 @@
    <zorder>ActionsSinceLastUpdateNum</zorder>
    <zorder>DayNum</zorder>
    <zorder>HelpWindow</zorder>
+   <zorder>PNLnum_2</zorder>
   </widget>
  </widget>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="TradeStrats"/>
   <buttongroup name="NumDay"/>
+  <buttongroup name="TradeStrats"/>
  </buttongroups>
 </ui>

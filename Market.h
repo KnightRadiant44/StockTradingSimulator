@@ -14,11 +14,8 @@ private:
     std::mt19937 gen;
     std::normal_distribution<> d;
     double overallTrend;
-    double currentPrice;
-public:
 
-    double getPrice() const { return currentPrice; }  // Add 'const' here
-    double getVolatility() const { return volatility; }  // Make sure this is const too
+public:
     Market() : price(100), volatility(0.02), gen(std::random_device{}()), d(0, 1), overallTrend(0) {}
 
     double getPrice() {
@@ -28,6 +25,7 @@ public:
     }
 
     void setVolatility(double vol) { volatility = vol; }
+    double getVolatility() const { return volatility; }
 
     void adjustVolatility(const std::string& marketEvent) {
         if (marketEvent.find("uncertainty") != std::string::npos) {
