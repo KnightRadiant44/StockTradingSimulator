@@ -770,8 +770,8 @@
    <widget class="QPushButton" name="StartSim">
     <property name="geometry">
      <rect>
-      <x>1250</x>
-      <y>600</y>
+      <x>1245</x>
+      <y>560</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -808,8 +808,8 @@
    <widget class="QPushButton" name="exitButton">
     <property name="geometry">
      <rect>
-      <x>1250</x>
-      <y>650</y>
+      <x>1245</x>
+      <y>600</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -1437,7 +1437,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="PNLnumLastUpdate">
@@ -1463,7 +1463,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="ActionsSinceLastUpdateNum">
@@ -1503,11 +1503,11 @@
      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="HelpWindow">
+   <widget class="QPushButton" name="HelpButton">
     <property name="geometry">
      <rect>
-      <x>1250</x>
-      <y>700</y>
+      <x>1245</x>
+      <y>640</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -1601,7 +1601,7 @@
    <zorder>PnlLastUpdate</zorder>
    <zorder>ActionsSinceLastUpdateNum</zorder>
    <zorder>DayNum</zorder>
-   <zorder>HelpWindow</zorder>
+   <zorder>HelpButton</zorder>
    <zorder>PNLnum_2</zorder>
   </widget>
  </widget>

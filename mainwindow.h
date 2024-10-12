@@ -22,6 +22,9 @@ private slots:
     void updateUIFromBot();
     void onSimulationComplete();
     void on_exitButton_clicked();
+    void on_HelpButton_clicked();
+
+
 
 private:
     Ui::MainWindow *ui;
@@ -54,6 +57,7 @@ private:
     int strategyChoice;
     int NumOfDays;
     int NumOfUpdates;
+
 };
 
 #endif // MAINWINDOW_H

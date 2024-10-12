@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <string>
+#include <vector>
+#include <fstream>
 
 class TradingStrategy;
 class RiskManagement;
@@ -14,6 +16,7 @@ class TradingBot : public QObject {
 public:
     TradingBot(QObject *parent = nullptr);
     ~TradingBot();
+    void recordTrade(const std::string& action, double price, int quantity);
 
     // Getters
     double getCurrentPrice() const;
@@ -43,13 +46,18 @@ public:
     void executeNextDay();
     bool isSimulationComplete() const;
 
-signals:
-    void updateUI();
-    void simulationComplete();
 
 private:
     class TradingBotImpl;
     TradingBotImpl* pImpl;
+    std::ofstream tradeFile;
+
+    void logTrade(int day, double currentPrice, const std::string& tradeAction, double actionTaken);  // Add this line
+
+signals:
+    void updateUI();
+    void simulationComplete();
+
 };
 
 #endif // TRADINGBOT_H

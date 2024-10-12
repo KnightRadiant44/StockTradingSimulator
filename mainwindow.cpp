@@ -23,6 +23,7 @@ MainWindow::MainWindow(const QString &username, QWidget *parent)
     // Connect button signals to corresponding slots
     connect(ui->StartSim, &QPushButton::clicked, this, &MainWindow::onConfirmButtonClicked);
     connect(ui->exitButton, &QPushButton::clicked, this, &MainWindow::on_exitButton_clicked);
+    connect(ui->HelpButton, &QPushButton::clicked, this, &MainWindow::on_HelpButton_clicked);
 
     // Set window title
     setWindowTitle("Trading Stock Simulation - " + username);
@@ -30,6 +31,7 @@ MainWindow::MainWindow(const QString &username, QWidget *parent)
     // Set initial values for UI elements
     ValuesSet();
 }
+
 
 // Destructor for the MainWindow class
 MainWindow::~MainWindow()
@@ -134,11 +136,16 @@ void MainWindow::onSimulationComplete()
 {
     QMessageBox::information(this, "Simulation Complete", "The trading simulation has finished.");
 
-    QFile Trades("//Users//shxhid01//Library//CloudStorage//OneDrive-UniversityofAdelaide//2024S2//OOP//TradingSimulation-UI-QT//trades_taken.txt");
-    if(!Trades.open(QIODevice::ReadOnly))
-        QMessageBox::information(0,"Trades", Trades.errorString());
-    QTextStream in(&Trades);
-    ui->TradesTakenBox->setText(in.readAll());
+    // Read and display the contents of trades_taken.txt
+    QFile tradesFile("/Users/shxhid01/Documents/TradingSimulation/trades_taken.txt");
+    if (tradesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&tradesFile);
+        QString tradesContent = in.readAll();
+        ui->TradesTakenBox->setPlainText(tradesContent);
+        tradesFile.close();
+    } else {
+        QMessageBox::warning(this, "File Error", "Unable to open trades_taken.txt");
+    }
 }
 
 // Function to get the selected strategy index
@@ -170,4 +177,17 @@ int MainWindow::getSelectedDays() const
 void MainWindow::on_exitButton_clicked()
 {
     QApplication::quit(); // Close the application
+}
+
+
+void MainWindow::on_HelpButton_clicked()
+{
+    QString instructions = "Instructions on how to use the application:\n\n"
+                           "1. Select a strategy to use on the top right.\n"
+                           "2. Choose the number of days you want to simulate.\n"
+                           "3. Enter how frequently you want updates to change strategies or not.\n"
+                           "4. On the left, you can see your stats and trading information.\n"
+                           "5. On the bottom, after the simulation is complete, you can see the actions the bot took.";
+
+    QMessageBox::information(this, "Help - Instructions", instructions);
 }

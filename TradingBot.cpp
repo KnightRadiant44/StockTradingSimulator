@@ -13,6 +13,8 @@
 #include <cmath>
 #include <numeric>
 #include <algorithm>
+#include <QMessageBox>
+#include <QDir>
 
 class TradingBot::TradingBotImpl {
 public:
@@ -80,8 +82,6 @@ public:
     const double slippageFactor;
 
     std::string generateMarketEvent() {
-        // Implementation of generateMarketEvent
-        // ...
         return "Normal market conditions"; // Placeholder
     }
 
@@ -144,9 +144,23 @@ public:
     }
 };
 
-TradingBot::TradingBot(QObject *parent) : QObject(parent), pImpl(new TradingBotImpl()) {}
+// Constructor
+TradingBot::TradingBot(QObject *parent) : QObject(parent), pImpl(new TradingBotImpl()) {
+    QString documentsPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QString tradingSimFolder = documentsPath + "/TradingSimulation";
+    QDir().mkpath(tradingSimFolder);
+    QString tradeFilePath = tradingSimFolder + "/trades_taken.txt";
+
+    tradeFile.open(tradeFilePath.toStdString(), std::ios::out | std::ios::trunc);
+    if (!tradeFile.is_open()) {
+        QMessageBox::warning(nullptr, "Error", "Couldn't open trades_taken.txt file. Please check file permissions.");
+    }
+}
 
 TradingBot::~TradingBot() {
+    if (tradeFile.is_open()) {
+        tradeFile.close();
+    }
     delete pImpl;
 }
 
@@ -191,6 +205,12 @@ void TradingBot::initializeSimulation(int days) {
 
     pImpl->buysSinceLastUpdate = pImpl->sellsSinceLastUpdate = pImpl->holdsSinceLastUpdate = 0;
     pImpl->totalBuys = pImpl->totalSells = pImpl->totalHolds = 0;
+
+    tradeFile.close();
+    tradeFile.open(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation).toStdString() + "/TradingSimulation/trades_taken.txt", std::ios::out | std::ios::trunc);
+    if (!tradeFile.is_open()) {
+        QMessageBox::warning(nullptr, "Error", "Couldn't open trades_taken.txt file. Please check file permissions.");
+    }
 }
 
 void TradingBot::executeNextDay() {
@@ -209,6 +229,7 @@ void TradingBot::executeNextDay() {
 
     std::string tradeAction;
     double actionTaken = 0;
+    logTrade(pImpl->currentDay, currentPrice, tradeAction, actionTaken);
 
     if (adjustedAction > 0) {
         int stocksToBuy = static_cast<int>(adjustedAction * pImpl->balance / currentPrice);
@@ -263,3 +284,15 @@ void TradingBot::executeNextDay() {
 bool TradingBot::isSimulationComplete() const {
     return pImpl->currentDay >= pImpl->totalDays;
 }
+void TradingBot::logTrade(int day, double currentPrice, const std::string& tradeAction, double actionTaken) {
+    if (tradeFile.is_open()) {
+        double totalValue = pImpl->balance + pImpl->ownedStocks * currentPrice;
+        tradeFile << "Day " << std::setw(3) << day
+                  << ": Price = $" << std::fixed << std::setprecision(2) << currentPrice
+                  << ", Action = " << std::setw(4) << tradeAction << " " << std::setw(3) << actionTaken
+                  << " stocks, Balance = $" << std::setw(10) << pImpl->balance
+                  << ", Owned Stocks = " << std::setw(4) << pImpl->ownedStocks
+                  << ", Total Value = $" << std::setw(10) << totalValue << "\n";
+        tradeFile.flush();  // Ensure the data is written immediately
+    }
+};
