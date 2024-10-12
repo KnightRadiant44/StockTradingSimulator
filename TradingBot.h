@@ -45,6 +45,7 @@ public:
     void initializeSimulation(int days);
     void executeNextDay();
     bool isSimulationComplete() const;
+    void updateTotalActions();
 
 
 private:

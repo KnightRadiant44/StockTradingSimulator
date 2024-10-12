@@ -47,6 +47,7 @@ public:
         strategies.push_back(new RandomStrategy());
         strategies.push_back(new MovingAverageStrategy());
 
+        loadState();
         QString documentsPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
         tradesFilePath = documentsPath + "/trades_taken.txt";
     }
@@ -56,6 +57,7 @@ public:
             delete strategy;
         }
         delete riskManager;
+        saveState();  // Save state when the bot is destroyed
     }
 
     std::vector<TradingStrategy*> strategies;
@@ -142,10 +144,96 @@ public:
             file.close();
         }
     }
+
+    void saveState() {
+        QString filePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) +
+                           "/TradingSimulation/saved_state.txt";
+
+        QFile file(filePath);
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QTextStream out(&file);
+            // Save all relevant data
+            out << "Balance: " << balance << "\n";
+            out << "OwnedStocks: " << ownedStocks << "\n";
+            out << "TotalBuys: " << totalBuys << "\n";
+            out << "TotalSells: " << totalSells << "\n";
+            out << "CurrentDay: " << currentDay << "\n";
+            out << "MaxDrawdown: " << maxDrawdown << "\n";
+            out << "TotalReturn: " << totalReturn << "\n";
+            out << "Volatility: " << volatility << "\n";
+            out << "SharpeRatio: " << sharpeRatio << "\n";
+            out << "BuysSinceLastUpdate: " << buysSinceLastUpdate << "\n";  // Actions since last update
+            out << "SellsSinceLastUpdate: " << sellsSinceLastUpdate << "\n"; // Actions since last update
+            out << "HoldsSinceLastUpdate: " << holdsSinceLastUpdate << "\n"; // Actions since last update
+            file.close();
+        } else {
+            QMessageBox::warning(nullptr, "File Error", "Unable to save state.");
+        }
+    }
+
+
+    void loadState() {
+        QString filePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) +
+                           "/TradingSimulation/saved_state.txt";
+
+        QFile file(filePath);
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QTextStream in(&file);
+            QString line;
+            while (in.readLineInto(&line)) {
+                QStringList parts = line.split(": ");
+                if (parts.size() == 2) {
+                    if (parts[0] == "Balance") {
+                        balance = parts[1].toDouble();
+                    } else if (parts[0] == "OwnedStocks") {
+                        ownedStocks = parts[1].toInt();
+                    } else if (parts[0] == "TotalBuys") {
+                        totalBuys = parts[1].toInt(); // Total actions
+                    } else if (parts[0] == "TotalSells") {
+                        totalSells = parts[1].toInt(); // Total actions
+                    } else if (parts[0] == "CurrentDay") {
+                        currentDay = parts[1].toInt();
+                    } else if (parts[0] == "MaxDrawdown") {
+                        maxDrawdown = parts[1].toDouble();
+                    } else if (parts[0] == "TotalReturn") {
+                        totalReturn = parts[1].toDouble();
+                    } else if (parts[0] == "Volatility") {
+                        volatility = parts[1].toDouble();
+                    } else if (parts[0] == "SharpeRatio") {
+                        sharpeRatio = parts[1].toDouble();
+                    } else if (parts[0] == "BuysSinceLastUpdate") { // Actions since last update
+                        buysSinceLastUpdate = parts[1].toInt();
+                    } else if (parts[0] == "SellsSinceLastUpdate") { // Actions since last update
+                        sellsSinceLastUpdate = parts[1].toInt();
+                    } else if (parts[0] == "HoldsSinceLastUpdate") { // Actions since last update
+                        holdsSinceLastUpdate = parts[1].toInt();
+                    }
+                }
+            }
+            file.close();
+        } else {
+            // Initialize to default values if the file doesn't exist
+            balance = 10000;
+            ownedStocks = 0;
+            totalBuys = 0;           // Total actions start from 0
+            totalSells = 0;          // Total actions start from 0
+            currentDay = 0;
+            maxDrawdown = 0;
+            totalReturn = 0;
+            volatility = 0;
+            sharpeRatio = 0;
+            buysSinceLastUpdate = 0; // Default for buys since last update
+            sellsSinceLastUpdate = 0; // Default for sells since last update
+            holdsSinceLastUpdate = 0; // Default for holds since last update
+        }
+    }
+
+
 };
 
 // Constructor
 TradingBot::TradingBot(QObject *parent) : QObject(parent), pImpl(new TradingBotImpl()) {
+    pImpl->loadState();  // Load the previous balance on initialization
     QString documentsPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     QString tradingSimFolder = documentsPath + "/TradingSimulation";
     QDir().mkpath(tradingSimFolder);
@@ -231,35 +319,50 @@ void TradingBot::executeNextDay() {
     double actionTaken = 0;
     logTrade(pImpl->currentDay, currentPrice, tradeAction, actionTaken);
 
+    // Execute buy action
     if (adjustedAction > 0) {
         int stocksToBuy = static_cast<int>(adjustedAction * pImpl->balance / currentPrice);
         double cost = pImpl->applyTransactionFee(stocksToBuy * currentPrice);
         if (pImpl->balance >= cost) {
             pImpl->ownedStocks += stocksToBuy;
             pImpl->balance -= cost;
+            pImpl->saveState(); // Save the new balance after buying
             tradeAction = "Buy";
             actionTaken = stocksToBuy;
-            pImpl->buysSinceLastUpdate++;
-            pImpl->totalBuys++;
+            pImpl->buysSinceLastUpdate++; // Increment last update buys
         } else {
             tradeAction = "Hold (Insufficient funds)";
-            pImpl->holdsSinceLastUpdate++;
-            pImpl->totalHolds++;
+            pImpl->holdsSinceLastUpdate++; // Increment last update holds
         }
-    } else if (adjustedAction < 0 && pImpl->ownedStocks > 0) {
+    }
+    // Execute sell action
+    else if (adjustedAction < 0 && pImpl->ownedStocks > 0) {
         int stocksToSell = std::min(static_cast<int>(-adjustedAction * pImpl->ownedStocks), pImpl->ownedStocks);
         double revenue = pImpl->applyTransactionFee(stocksToSell * currentPrice);
         pImpl->ownedStocks -= stocksToSell;
         pImpl->balance += revenue;
+        pImpl->saveState(); // Save the new balance after selling
         tradeAction = "Sell";
         actionTaken = stocksToSell;
-        pImpl->sellsSinceLastUpdate++;
-        pImpl->totalSells++;
-    } else {
-        tradeAction = "Hold";
-        pImpl->holdsSinceLastUpdate++;
-        pImpl->totalHolds++;
+        pImpl->sellsSinceLastUpdate++; // Increment last update sells
     }
+    // No buy/sell action, just hold
+    else {
+        tradeAction = "Hold";
+        pImpl->holdsSinceLastUpdate++; // Increment last update holds
+    }
+
+    // Update total actions only if actions since last update are greater than zero
+    if (pImpl->buysSinceLastUpdate > 0 || pImpl->sellsSinceLastUpdate > 0 || pImpl->holdsSinceLastUpdate > 0) {
+        pImpl->totalBuys += pImpl->buysSinceLastUpdate;
+        pImpl->totalSells += pImpl->sellsSinceLastUpdate;
+        pImpl->totalHolds += pImpl->holdsSinceLastUpdate;
+    }
+
+    // Reset actions since last update to 0 for the next day
+    pImpl->buysSinceLastUpdate = 0;
+    pImpl->sellsSinceLastUpdate = 0;
+    pImpl->holdsSinceLastUpdate = 0;
 
     double totalValue = pImpl->balance + pImpl->ownedStocks * currentPrice;
     pImpl->balanceHistory.push_back(totalValue);
@@ -280,6 +383,8 @@ void TradingBot::executeNextDay() {
         emit simulationComplete();
     }
 }
+
+
 
 bool TradingBot::isSimulationComplete() const {
     return pImpl->currentDay >= pImpl->totalDays;
