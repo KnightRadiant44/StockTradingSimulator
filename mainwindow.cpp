@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QTimer>
 #include "TradingBot.h"
+#include <QStandardPaths>
 
 // Constructor for the MainWindow class
 MainWindow::MainWindow(const QString &username, QWidget *parent)
@@ -136,8 +137,12 @@ void MainWindow::onSimulationComplete()
 {
     QMessageBox::information(this, "Simulation Complete", "The trading simulation has finished.");
 
+    // Construct the path to trades_taken.txt dynamically
+    QString homeDir = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    QString tradesFilePath = homeDir + "/Documents/TradingSimulation/trades_taken.txt";
+
     // Read and display the contents of trades_taken.txt
-    QFile tradesFile("/Users/shxhid01/Documents/TradingSimulation/trades_taken.txt");
+    QFile tradesFile(tradesFilePath);
     if (tradesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&tradesFile);
         QString tradesContent = in.readAll();

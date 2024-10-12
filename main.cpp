@@ -35,12 +35,5 @@ int main(int argc, char *argv[])
     int NumOfDays      = 0;
     int NumOfUpdates   = 0;
 
-
-
-
-
-
-
-
     return 0;
 }

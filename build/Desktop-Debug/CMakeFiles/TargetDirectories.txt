@@ -1,0 +1,9 @@
+/Users/MahirIslam/programming/oop/TradingSimulation/build/Desktop-Debug/CMakeFiles/Trading.dir
+/Users/MahirIslam/programming/oop/TradingSimulation/build/Desktop-Debug/CMakeFiles/edit_cache.dir
+/Users/MahirIslam/programming/oop/TradingSimulation/build/Desktop-Debug/CMakeFiles/rebuild_cache.dir
+/Users/MahirIslam/programming/oop/TradingSimulation/build/Desktop-Debug/CMakeFiles/list_install_components.dir
+/Users/MahirIslam/programming/oop/TradingSimulation/build/Desktop-Debug/CMakeFiles/install.dir
+/Users/MahirIslam/programming/oop/TradingSimulation/build/Desktop-Debug/CMakeFiles/install/local.dir
+/Users/MahirIslam/programming/oop/TradingSimulation/build/Desktop-Debug/CMakeFiles/install/strip.dir
+/Users/MahirIslam/programming/oop/TradingSimulation/build/Desktop-Debug/CMakeFiles/Trading_autogen_timestamp_deps.dir
+/Users/MahirIslam/programming/oop/TradingSimulation/build/Desktop-Debug/CMakeFiles/Trading_autogen.dir
