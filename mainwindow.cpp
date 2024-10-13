@@ -8,13 +8,13 @@
 #include "TradingBot.h"
 #include <QStandardPaths>
 
-// Constructor for the MainWindow class
 MainWindow::MainWindow(const QString &username, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow),
     updateTimer(nullptr), tradingBot(nullptr)
 {
     ui->setupUi(this); // Setup the UI elements
     ui->UserName->setText(username); // Set the username display
+
 
     // Create and connect the TradingBot
     tradingBot = new TradingBot(this);
@@ -25,14 +25,13 @@ MainWindow::MainWindow(const QString &username, QWidget *parent)
     connect(ui->StartSim, &QPushButton::clicked, this, &MainWindow::onConfirmButtonClicked);
     connect(ui->exitButton, &QPushButton::clicked, this, &MainWindow::on_exitButton_clicked);
     connect(ui->HelpButton, &QPushButton::clicked, this, &MainWindow::on_HelpButton_clicked);
-
+    connect(ui->ResetButton, &QPushButton::clicked, this, &MainWindow::OnResetButtonClicked);
     // Set window title
     setWindowTitle("Trading Stock Simulation - " + username);
-
+    ui->ResetButton->setMinimumSize(80, 30); // Example size
     // Set initial values for UI elements
     ValuesSet();
 }
-
 
 // Destructor for the MainWindow class
 MainWindow::~MainWindow()
@@ -98,7 +97,7 @@ void MainWindow::onConfirmButtonClicked()
         updateTimer = new QTimer(this);
         connect(updateTimer, &QTimer::timeout, this, &MainWindow::executeNextTradingDay);
     }
-    updateTimer->start(10); // Execute a day every 0.01 seconds or 10 milliseconds
+    updateTimer->start(1); // Execute a day every 0.01 seconds or 10 milliseconds
 }
 
 // Function to execute the next trading day
@@ -126,7 +125,7 @@ void MainWindow::onSimulationComplete()
 
     // Construct the path to trades_taken.txt dynamically
     QString homeDir = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    QString tradesFilePath = homeDir + "/Documents/TradingSimulation/trades_taken.txt";
+    QString tradesFilePath = homeDir + "/Documents/trades_taken.txt";
 
     // Read and display the contents of trades_taken.txt
     QFile tradesFile(tradesFilePath);
@@ -182,4 +181,35 @@ void MainWindow::on_HelpButton_clicked()
                            "5. On the bottom, after the simulation is complete, you can see the actions the bot took.";
 
     QMessageBox::information(this, "Help - Instructions", instructions);
+}
+
+
+void MainWindow::OnResetButtonClicked()
+    // Slot function triggered when the reset button is clicked
+{
+    // Reset the TradingBot to its initial state
+    tradingBot->resetToInitialState();
+
+    // Reset the UI elements to reflect initial state
+    ValuesSet(); // This will refresh the UI with the initial values from TradingBot
+
+    // Optionally reset any other UI elements, like radio buttons or text fields
+    ui->BuyAndHold->setChecked(false);
+    ui->MeanReversion->setChecked(false);
+    ui->MovingAvg->setChecked(false);
+    ui->TrendFollowing->setChecked(false);
+    ui->Random->setChecked(false);
+
+    // Reset day selection buttons (if needed)
+    ui->Day50->setChecked(false);
+    ui->Day100->setChecked(false);
+    ui->Day150->setChecked(false);
+    ui->Day200->setChecked(false);
+    ui->Day400->setChecked(false);
+    ui->Day800->setChecked(false);
+    ui->Day1000->setChecked(false);
+    ui->Day2000->setChecked(false);
+
+    // Show a message indicating reset is complete (optional)
+    QMessageBox::information(this, "Reset Complete", "All values have been reset to their initial states.");
 }

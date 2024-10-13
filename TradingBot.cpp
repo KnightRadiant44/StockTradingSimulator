@@ -233,11 +233,14 @@ public:
 
 // Constructor
 TradingBot::TradingBot(QObject *parent) : QObject(parent), pImpl(new TradingBotImpl()) {
+
     pImpl->loadState();  // Load the previous balance on initialization
     QString documentsPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     QString tradingSimFolder = documentsPath + "/TradingSimulation";
     QDir().mkpath(tradingSimFolder);
     QString tradeFilePath = tradingSimFolder + "/trades_taken.txt";
+
+
 
     tradeFile.open(tradeFilePath.toStdString(), std::ios::out | std::ios::trunc);
     if (!tradeFile.is_open()) {
@@ -385,7 +388,6 @@ void TradingBot::executeNextDay() {
 }
 
 
-
 bool TradingBot::isSimulationComplete() const {
     return pImpl->currentDay >= pImpl->totalDays;
 }
@@ -401,3 +403,26 @@ void TradingBot::logTrade(int day, double currentPrice, const std::string& trade
         tradeFile.flush();  // Ensure the data is written immediately
     }
 };
+
+
+void TradingBot::resetToInitialState() {
+    // Reset the trading bot's state to its initial values
+    pImpl->balance = 10000.0;  // Initial balance
+    pImpl->ownedStocks = 0;  // Reset owned stocks
+    pImpl->totalReturn = 0.0;  // Reset total return
+    pImpl->maxDrawdown = 0.0;  // Reset max drawdown
+    pImpl->volatility = 0.0;  // Reset volatility
+    pImpl->sharpeRatio = 0.0;  // Reset Sharpe ratio
+    pImpl->lastUpdateValue = pImpl->balance;
+    pImpl->lastUpdateDay = 0;
+    pImpl->buysSinceLastUpdate = 0;
+    pImpl->sellsSinceLastUpdate = 0;
+    pImpl->holdsSinceLastUpdate = 0;
+    pImpl->totalBuys = 0;
+    pImpl->totalSells = 0;
+    pImpl->totalHolds = 0;
+    pImpl->currentDay = 0;
+    pImpl->balanceHistory.clear();
+    pImpl->balanceHistory.push_back(pImpl->balance);
+    pImpl->saveState();
+}

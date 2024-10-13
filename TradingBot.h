@@ -3,9 +3,7 @@
 
 #include <QObject>
 #include <string>
-#include <vector>
 #include <fstream>
-
 class TradingStrategy;
 class RiskManagement;
 class Market;
@@ -17,6 +15,7 @@ public:
     TradingBot(QObject *parent = nullptr);
     ~TradingBot();
     void recordTrade(const std::string& action, double price, int quantity);
+    void resetToInitialState();
 
     // Getters
     double getCurrentPrice() const;
