@@ -3,6 +3,10 @@
 #include <QDebug>
 #include "mainwindow.h"
 #include "logindialog.h"
+#include <QCoreApplication>
+#include <QProcess>
+#include <QTextStream>
+#include <QFile>
 
 int main(int argc, char *argv[])
 {
@@ -30,10 +34,6 @@ int main(int argc, char *argv[])
     } else {
         qDebug() << "Login canceled or failed";
     }
-
-    int strategyChoice = 0;
-    int NumOfDays      = 0;
-    int NumOfUpdates   = 0;
 
     return 0;
 }

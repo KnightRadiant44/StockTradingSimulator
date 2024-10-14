@@ -7,6 +7,8 @@
 #include <QTimer>
 #include "TradingBot.h"
 #include <QStandardPaths>
+#include <QInputDialog>
+
 
 MainWindow::MainWindow(const QString &username, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow),
@@ -28,7 +30,6 @@ MainWindow::MainWindow(const QString &username, QWidget *parent)
     connect(ui->ResetButton, &QPushButton::clicked, this, &MainWindow::OnResetButtonClicked);
     // Set window title
     setWindowTitle("Trading Stock Simulation - " + username);
-    ui->ResetButton->setMinimumSize(80, 30); // Example size
     // Set initial values for UI elements
     ValuesSet();
 }
@@ -68,6 +69,8 @@ void MainWindow::ValuesSet()
     ui->PNLnum->setNum(tradingBot->getProfitLossSinceStart());
     ui->PNLnumLastUpdate->setNum(tradingBot->getProfitLossSinceLastUpdate());
     ui->DayNum->setNum(tradingBot->getCurrentDay());
+    ui->NumOfUpdates->setText(QString::number(updateFrequency));
+
 
 }
 
@@ -89,6 +92,18 @@ void MainWindow::onConfirmButtonClicked()
         return;
     }
 
+
+    days = getSelectedDays();
+    updateFrequency = ui->NumOfUpdates->text().toInt();
+    if (updateFrequency <= 0 || updateFrequency > days) {
+        QMessageBox::warning(this, "Invalid Update Frequency", "Please enter a valid update frequency (between 1 and the number of simulation days).");
+        return;
+    }
+
+    currentSimulationDay = 0;
+
+
+
     tradingBot->setStrategy(strategyIndex);
     tradingBot->initializeSimulation(days);
 
@@ -104,13 +119,52 @@ void MainWindow::onConfirmButtonClicked()
 void MainWindow::executeNextTradingDay()
 {
     if (!tradingBot->isSimulationComplete()) {
+        currentSimulationDay++;
         tradingBot->executeNextDay();
         updateUIFromBot();
+
+        if (currentSimulationDay % updateFrequency == 0) {
+            promptForStrategyChange();
+        }
     } else {
         updateTimer->stop();
         onSimulationComplete();
     }
 }
+
+
+void MainWindow::promptForStrategyChange()
+{
+    updateTimer->stop(); // Pause the simulation
+
+    QMessageBox msgBox;
+    msgBox.setText("Do you want to change the trading strategy?");
+    msgBox.setInformativeText("Current strategy: " + QString::fromStdString(tradingBot->getCurrentStrategyName()));
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::No);
+
+    int ret = msgBox.exec();
+
+    if (ret == QMessageBox::Yes) {
+        // Show strategy selection dialog
+        QStringList strategies;
+        strategies << "Buy and Hold" << "Mean Reversion" << "Trend Following" << "Random" << "Moving Average";
+
+        bool ok;
+        QString strategy = QInputDialog::getItem(this, "Select Strategy", "Choose a new strategy:", strategies, 0, false, &ok);
+
+        if (ok && !strategy.isEmpty()) {
+            int strategyIndex = strategies.indexOf(strategy);
+            ui->NumOfUpdates->setText(QString::number(updateFrequency)); // Assuming you have a QLabel named UpdateFrequencyDisplay
+
+            tradingBot->setStrategy(strategyIndex);
+            QMessageBox::information(this, "Strategy Changed", "New strategy: " + strategy);
+        }
+    }
+
+    updateTimer->start(); // Resume the simulation
+}
+
 
 // Function to update values from the trading bot
 void MainWindow::updateUIFromBot()
@@ -213,3 +267,4 @@ void MainWindow::OnResetButtonClicked()
     // Show a message indicating reset is complete (optional)
     QMessageBox::information(this, "Reset Complete", "All values have been reset to their initial states.");
 }
+

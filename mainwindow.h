@@ -30,6 +30,10 @@ private:
     TradingBot *tradingBot;
     QTimer *updateTimer;
 
+
+    void promptForStrategyChange();
+    int updateFrequency;
+    int currentSimulationDay;
     void ValuesSet();
     int getSelectedStrategyIndex() const;
     int getSelectedDays() const;
