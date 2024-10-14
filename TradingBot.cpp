@@ -84,7 +84,14 @@ public:
     const double slippageFactor;
 
     std::string generateMarketEvent() {
-        return "Normal market conditions"; // Placeholder
+        std::vector<std::string> events = {
+            "Major product announcement",
+            "Market downturn indicators",
+            "Bull market predictions",
+            "Uncertainty due to policy changes",
+            "Competitor's actions impacting stock"
+        };
+        return events[std::rand() % events.size()];
     }
 
     double applyTransactionFee(double amount) {

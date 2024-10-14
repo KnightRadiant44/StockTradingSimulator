@@ -69,9 +69,6 @@ public:
     QLabel *MarketEvent;
     QLabel *PNLsinceStart;
     QLabel *PNL_LastUpdate;
-    QLabel *ActionsUpdate;
-    QLabel *TotalActions;
-    QLabel *TotalActionsNum;
     QLabel *PerformanceMetrics;
     QFrame *PerformaceMetricLine;
     QLabel *CumReturn;
@@ -90,11 +87,10 @@ public:
     QLabel *MarketEventString;
     QLabel *PNLnum;
     QLabel *PNLnumLastUpdate;
-    QLabel *PnlLastUpdate;
-    QLabel *ActionsSinceLastUpdateNum;
     QLabel *DayNum;
     QPushButton *HelpButton;
     QLabel *PNLnum_2;
+    QPushButton *ResetButton;
     QButtonGroup *NumDay;
     QButtonGroup *TradeStrats;
 
@@ -392,7 +388,7 @@ public:
         TotalCurrentValue->setAlignment(Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter);
         CurrentStrategy = new QLabel(centralwidget);
         CurrentStrategy->setObjectName("CurrentStrategy");
-        CurrentStrategy->setGeometry(QRect(5, 390, 111, 20));
+        CurrentStrategy->setGeometry(QRect(5, 390, 61, 20));
         CurrentStrategy->setAlignment(Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter);
         MarketVolatility = new QLabel(centralwidget);
         MarketVolatility->setObjectName("MarketVolatility");
@@ -410,18 +406,6 @@ public:
         PNL_LastUpdate->setObjectName("PNL_LastUpdate");
         PNL_LastUpdate->setGeometry(QRect(0, 560, 181, 20));
         PNL_LastUpdate->setAlignment(Qt::AlignmentFlag::AlignCenter);
-        ActionsUpdate = new QLabel(centralwidget);
-        ActionsUpdate->setObjectName("ActionsUpdate");
-        ActionsUpdate->setGeometry(QRect(0, 610, 181, 20));
-        ActionsUpdate->setAlignment(Qt::AlignmentFlag::AlignCenter);
-        TotalActions = new QLabel(centralwidget);
-        TotalActions->setObjectName("TotalActions");
-        TotalActions->setGeometry(QRect(0, 660, 181, 20));
-        TotalActions->setAlignment(Qt::AlignmentFlag::AlignCenter);
-        TotalActionsNum = new QLabel(centralwidget);
-        TotalActionsNum->setObjectName("TotalActionsNum");
-        TotalActionsNum->setGeometry(QRect(0, 690, 181, 20));
-        TotalActionsNum->setAlignment(Qt::AlignmentFlag::AlignCenter);
         PerformanceMetrics = new QLabel(centralwidget);
         PerformanceMetrics->setObjectName("PerformanceMetrics");
         PerformanceMetrics->setGeometry(QRect(0, 119, 181, 31));
@@ -466,7 +450,7 @@ public:
         CurrentBalanceNum->setAlignment(Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter);
         CurrentStrategyNum = new QLabel(centralwidget);
         CurrentStrategyNum->setObjectName("CurrentStrategyNum");
-        CurrentStrategyNum->setGeometry(QRect(110, 390, 71, 20));
+        CurrentStrategyNum->setGeometry(QRect(60, 390, 121, 20));
         CurrentStrategyNum->setAlignment(Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter);
         TotalCurrentValueNum = new QLabel(centralwidget);
         TotalCurrentValueNum->setObjectName("TotalCurrentValueNum");
@@ -483,16 +467,11 @@ public:
         PNLnum = new QLabel(centralwidget);
         PNLnum->setObjectName("PNLnum");
         PNLnum->setGeometry(QRect(5, 530, 181, 20));
+        PNLnum->setAlignment(Qt::AlignmentFlag::AlignCenter);
         PNLnumLastUpdate = new QLabel(centralwidget);
         PNLnumLastUpdate->setObjectName("PNLnumLastUpdate");
         PNLnumLastUpdate->setGeometry(QRect(5, 580, 181, 20));
-        PnlLastUpdate = new QLabel(centralwidget);
-        PnlLastUpdate->setObjectName("PnlLastUpdate");
-        PnlLastUpdate->setGeometry(QRect(5, 580, 181, 20));
-        ActionsSinceLastUpdateNum = new QLabel(centralwidget);
-        ActionsSinceLastUpdateNum->setObjectName("ActionsSinceLastUpdateNum");
-        ActionsSinceLastUpdateNum->setGeometry(QRect(5, 630, 181, 20));
-        ActionsSinceLastUpdateNum->setAlignment(Qt::AlignmentFlag::AlignCenter);
+        PNLnumLastUpdate->setAlignment(Qt::AlignmentFlag::AlignCenter);
         DayNum = new QLabel(centralwidget);
         DayNum->setObjectName("DayNum");
         DayNum->setGeometry(QRect(115, 289, 71, 31));
@@ -508,6 +487,10 @@ public:
         PNLnum_2 = new QLabel(centralwidget);
         PNLnum_2->setObjectName("PNLnum_2");
         PNLnum_2->setGeometry(QRect(101, 55, 81, 25));
+        ResetButton = new QPushButton(centralwidget);
+        ResetButton->setObjectName("ResetButton");
+        ResetButton->setGeometry(QRect(1245, 680, 121, 41));
+        ResetButton->setFont(font5);
         MainWindow->setCentralWidget(centralwidget);
         BuyAndHold->raise();
         TradingStrats->raise();
@@ -551,9 +534,6 @@ public:
         MarketEvent->raise();
         PNLsinceStart->raise();
         PNL_LastUpdate->raise();
-        ActionsUpdate->raise();
-        TotalActions->raise();
-        TotalActionsNum->raise();
         PerformanceMetrics->raise();
         PerformaceMetricLine->raise();
         CumReturn->raise();
@@ -572,11 +552,10 @@ public:
         MarketEventString->raise();
         PNLnum->raise();
         PNLnumLastUpdate->raise();
-        PnlLastUpdate->raise();
-        ActionsSinceLastUpdateNum->raise();
         DayNum->raise();
         HelpButton->raise();
         PNLnum_2->raise();
+        ResetButton->raise();
 
         retranslateUi(MainWindow);
 
@@ -617,14 +596,11 @@ public:
         CurrentPrice->setText(QCoreApplication::translate("MainWindow", "Current Price:", nullptr));
         CurrentBalance->setText(QCoreApplication::translate("MainWindow", "Current Balance:", nullptr));
         TotalCurrentValue->setText(QCoreApplication::translate("MainWindow", "Total Current Value:", nullptr));
-        CurrentStrategy->setText(QCoreApplication::translate("MainWindow", "Current Strategy:", nullptr));
+        CurrentStrategy->setText(QCoreApplication::translate("MainWindow", "Strategy:", nullptr));
         MarketVolatility->setText(QCoreApplication::translate("MainWindow", "Market Volatility:", nullptr));
         MarketEvent->setText(QCoreApplication::translate("MainWindow", "Market Event:", nullptr));
         PNLsinceStart->setText(QCoreApplication::translate("MainWindow", "Profit/Loss Since start", nullptr));
         PNL_LastUpdate->setText(QCoreApplication::translate("MainWindow", "Profit/Loss Since Last Update", nullptr));
-        ActionsUpdate->setText(QCoreApplication::translate("MainWindow", "Actions Since Last Update:", nullptr));
-        TotalActions->setText(QCoreApplication::translate("MainWindow", "Total Actions:", nullptr));
-        TotalActionsNum->setText(QCoreApplication::translate("MainWindow", "None", nullptr));
         PerformanceMetrics->setText(QCoreApplication::translate("MainWindow", "Perforamce Metrics", nullptr));
         CumReturn->setText(QCoreApplication::translate("MainWindow", "Cumulative Return:", nullptr));
         MaxDrawDown->setText(QCoreApplication::translate("MainWindow", "Maximum Drawdown:", nullptr));
@@ -642,11 +618,10 @@ public:
         MarketEventString->setText(QCoreApplication::translate("MainWindow", "None", nullptr));
         PNLnum->setText(QString());
         PNLnumLastUpdate->setText(QString());
-        PnlLastUpdate->setText(QString());
-        ActionsSinceLastUpdateNum->setText(QCoreApplication::translate("MainWindow", "None", nullptr));
         DayNum->setText(QString());
         HelpButton->setText(QCoreApplication::translate("MainWindow", "Help", nullptr));
         PNLnum_2->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        ResetButton->setText(QCoreApplication::translate("MainWindow", "Reset", nullptr));
     } // retranslateUi
 
 };
