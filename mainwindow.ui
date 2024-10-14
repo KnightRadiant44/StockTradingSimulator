@@ -672,9 +672,9 @@
    <widget class="Line" name="Divider2">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>200</x>
       <y>0</y>
-      <width>16</width>
+      <width>261</width>
       <height>800</height>
      </rect>
     </property>
@@ -717,7 +717,7 @@
      <rect>
       <x>0</x>
       <y>20</y>
-      <width>187</width>
+      <width>331</width>
       <height>16</height>
      </rect>
     </property>
@@ -728,9 +728,9 @@
    <widget class="Line" name="MidBotLine">
     <property name="geometry">
      <rect>
-      <x>187</x>
+      <x>327</x>
       <y>600</y>
-      <width>1041</width>
+      <width>901</width>
       <height>20</height>
      </rect>
     </property>
@@ -912,9 +912,9 @@
    <widget class="QTextBrowser" name="TradesTakenBox">
     <property name="geometry">
      <rect>
-      <x>187</x>
+      <x>327</x>
       <y>610</y>
-      <width>1041</width>
+      <width>901</width>
       <height>141</height>
      </rect>
     </property>
@@ -988,7 +988,7 @@
      <rect>
       <x>5</x>
       <y>289</y>
-      <width>101</width>
+      <width>111</width>
       <height>31</height>
      </rect>
     </property>
@@ -1009,7 +1009,7 @@
      <rect>
       <x>0</x>
       <y>310</y>
-      <width>187</width>
+      <width>331</width>
       <height>16</height>
      </rect>
     </property>
@@ -1097,27 +1097,11 @@
      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="MarketEvent">
-    <property name="geometry">
-     <rect>
-      <x>5</x>
-      <y>480</y>
-      <width>91</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Market Event:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
-    </property>
-   </widget>
    <widget class="QLabel" name="PNLsinceStart">
     <property name="geometry">
      <rect>
-      <x>5</x>
-      <y>510</y>
+      <x>0</x>
+      <y>470</y>
       <width>181</width>
       <height>20</height>
      </rect>
@@ -1133,7 +1117,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>560</y>
+      <y>520</y>
       <width>181</width>
       <height>20</height>
      </rect>
@@ -1171,7 +1155,7 @@
      <rect>
       <x>0</x>
       <y>140</y>
-      <width>187</width>
+      <width>331</width>
       <height>16</height>
      </rect>
     </property>
@@ -1363,27 +1347,11 @@
      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="MarketEventString">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>480</y>
-      <width>91</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>None</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
-    </property>
-   </widget>
    <widget class="QLabel" name="PNLnum">
     <property name="geometry">
      <rect>
-      <x>5</x>
-      <y>530</y>
+      <x>10</x>
+      <y>490</y>
       <width>181</width>
       <height>20</height>
      </rect>
@@ -1398,8 +1366,8 @@
    <widget class="QLabel" name="PNLnumLastUpdate">
     <property name="geometry">
      <rect>
-      <x>5</x>
-      <y>580</y>
+      <x>0</x>
+      <y>540</y>
       <width>181</width>
       <height>20</height>
      </rect>
@@ -1522,7 +1490,6 @@
    <zorder>TotalCurrentValue</zorder>
    <zorder>CurrentStrategy</zorder>
    <zorder>MarketVolatility</zorder>
-   <zorder>MarketEvent</zorder>
    <zorder>PNLsinceStart</zorder>
    <zorder>PNL_LastUpdate</zorder>
    <zorder>PerformanceMetrics</zorder>
@@ -1540,7 +1507,6 @@
    <zorder>CurrentStrategyNum</zorder>
    <zorder>TotalCurrentValueNum</zorder>
    <zorder>MarketVolatilityNum</zorder>
-   <zorder>MarketEventString</zorder>
    <zorder>PNLnum</zorder>
    <zorder>PNLnumLastUpdate</zorder>
    <zorder>DayNum</zorder>
@@ -1552,7 +1518,7 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="NumDay"/>
   <buttongroup name="TradeStrats"/>
+  <buttongroup name="NumDay"/>
  </buttongroups>
 </ui>

@@ -52,7 +52,6 @@ void MainWindow::ValuesSet()
     // Update various UI components with current values from the trading bot
     ui->CurrentPriceNum->setNum(tradingBot->getCurrentPrice());
     ui->TotalCurrentValueNum->setNum(tradingBot->getTotalValue());
-    ui->MarketEventString->setText(QString::fromStdString(tradingBot->getLastMarketEvent()));
 
     // Update additional UI elements with trading bot values
     ui->Bal_User->setNum(tradingBot->getBalance());
