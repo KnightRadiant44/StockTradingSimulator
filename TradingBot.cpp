@@ -15,7 +15,9 @@
 #include <algorithm>
 #include <QMessageBox>
 #include <QDir>
-
+#include <QtCharts/QtCharts>
+#include <QApplication>
+#include <QMainWindow>
 class TradingBot::TradingBotImpl {
 public:
     TradingBotImpl() :
@@ -312,8 +314,13 @@ void TradingBot::initializeSimulation(int days) {
 }
 
 void TradingBot::executeNextDay() {
+
     pImpl->currentDay++;
     double currentPrice = pImpl->market.getPrice();
+    pImpl->lastMarketEvent = pImpl->generateMarketEvent();
+    balanceHistory.push_back(pImpl->balance);
+    stockPriceHistory.push_back(currentPrice);
+    pImpl->currentDay++;
     pImpl->lastMarketEvent = pImpl->generateMarketEvent();
 
     pImpl->market.adjustVolatility(pImpl->lastMarketEvent);
@@ -386,6 +393,16 @@ void TradingBot::executeNextDay() {
     pImpl->totalReturn = pImpl->calculateCumulativeReturn();
     pImpl->volatility = pImpl->calculateVolatility();
     pImpl->sharpeRatio = pImpl->calculateSharpeRatio();
+    pImpl->balanceHistory.push_back(totalValue);
+    stockPriceHistory.push_back(currentPrice);  // Use this instead of pImpl->stockPriceHistory
+
+    pImpl->lastUpdateValue = totalValue;
+    pImpl->lastUpdateDay = pImpl->currentDay;
+
+    pImpl->maxDrawdown = pImpl->calculateMaxDrawdown();
+    pImpl->totalReturn = pImpl->calculateCumulativeReturn();
+    pImpl->volatility = pImpl->calculateVolatility();
+    pImpl->sharpeRatio = pImpl->calculateSharpeRatio();
 
     emit updateUI();
 
@@ -414,6 +431,8 @@ void TradingBot::logTrade(int day, double currentPrice, const std::string& trade
 
 void TradingBot::resetToInitialState() {
     // Reset the trading bot's state to its initial values
+    balanceHistory.clear();
+    stockPriceHistory.clear();
     pImpl->balance = 10000.0;  // Initial balance
     pImpl->ownedStocks = 0;  // Reset owned stocks
     pImpl->totalReturn = 0.0;  // Reset total return
@@ -432,4 +451,106 @@ void TradingBot::resetToInitialState() {
     pImpl->balanceHistory.clear();
     pImpl->balanceHistory.push_back(pImpl->balance);
     pImpl->saveState();
+}
+
+void TradingBot::generateBalanceGraph()
+{
+    QLineSeries *series = new QLineSeries();
+
+    for (size_t i = 0; i < balanceHistory.size(); ++i) {
+        series->append(i, balanceHistory[i]);
+    }
+
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->createDefaultAxes();
+    chart->setTitle("Balance History");
+    chart->setBackgroundBrush(QBrush(Qt::black));
+
+    // Set text color to white for better visibility on black background
+    QPen pen(Qt::white);
+    chart->setTitleBrush(QBrush(Qt::white));
+    chart->axisX()->setLabelsBrush(QBrush(Qt::white));
+    chart->axisY()->setLabelsBrush(QBrush(Qt::white));
+
+    // Color the line based on trend
+    QLinearGradient gradient(QPointF(0, 0), QPointF(1, 1));
+    for (size_t i = 1; i < balanceHistory.size(); ++i) {
+        qreal pos = i / qreal(balanceHistory.size() - 1);
+        if (balanceHistory[i] >= balanceHistory[i-1]) {
+            gradient.setColorAt(pos, Qt::green);
+        } else {
+            gradient.setColorAt(pos, Qt::red);
+        }
+    }
+    series->setBrush(gradient);
+
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->resize(800, 600);
+
+    // Create TradingSimulation folder in Documents if it doesn't exist
+    QString documentsPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QString folderPath = documentsPath + "/TradingSimulation";
+    QDir().mkpath(folderPath);
+
+    // Save as PNG in the TradingSimulation folder
+    QPixmap pixmap = chartView->grab();
+    pixmap.save(folderPath + "/balance_history.png");
+
+    delete chartView;
+}
+
+void TradingBot::generateStockPriceGraph()
+{
+    QLineSeries *series = new QLineSeries();
+
+    for (size_t i = 0; i < stockPriceHistory.size(); ++i) {
+        series->append(i, stockPriceHistory[i]);
+    }
+
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->createDefaultAxes();
+    chart->setTitle("Stock Price History");
+    chart->setBackgroundBrush(QBrush(Qt::black));
+
+    // Set text color to white for better visibility on black background
+    QPen pen(Qt::white);
+    chart->setTitleBrush(QBrush(Qt::white));
+    chart->axisX()->setLabelsBrush(QBrush(Qt::white));
+    chart->axisY()->setLabelsBrush(QBrush(Qt::white));
+
+    // Color the line based on trend
+    QLinearGradient gradient(QPointF(0, 0), QPointF(1, 1));
+    for (size_t i = 1; i < stockPriceHistory.size(); ++i) {
+        qreal pos = i / qreal(stockPriceHistory.size() - 1);
+        if (stockPriceHistory[i] >= stockPriceHistory[i-1]) {
+            gradient.setColorAt(pos, Qt::green);
+        } else {
+            gradient.setColorAt(pos, Qt::red);
+        }
+    }
+    series->setBrush(gradient);
+
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->resize(800, 600);
+
+    // Create TradingSimulation folder in Documents if it doesn't exist
+    QString documentsPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QString folderPath = documentsPath + "/TradingSimulation";
+    QDir().mkpath(folderPath);
+
+    // Save as PNG in the TradingSimulation folder
+    QPixmap pixmap = chartView->grab();
+    pixmap.save(folderPath + "/stock_price_history.png");
+
+    delete chartView;
+}
+
+void TradingBot::generateGraphs()
+{
+    generateBalanceGraph();
+    generateStockPriceGraph();
 }

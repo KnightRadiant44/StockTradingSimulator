@@ -174,7 +174,10 @@ void MainWindow::updateUIFromBot()
 // Slot function triggered when the simulation is complete
 void MainWindow::onSimulationComplete()
 {
-    QMessageBox::information(this, "Simulation Complete", "The trading simulation has finished.");
+    // Generate graphs
+    tradingBot->generateGraphs();
+
+    QMessageBox::information(this, "Simulation Complete", "The trading simulation has finished. Graphs have been generated.");
 
     // Construct the path to trades_taken.txt dynamically
     QString homeDir = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
@@ -190,6 +193,9 @@ void MainWindow::onSimulationComplete()
     } else {
         QMessageBox::warning(this, "File Error", "Unable to open trades_taken.txt");
     }
+
+
+    // You could add code here to display the generated graphs if desired
 }
 
 // Function to get the selected strategy index
@@ -266,4 +272,3 @@ void MainWindow::OnResetButtonClicked()
     // Show a message indicating reset is complete (optional)
     QMessageBox::information(this, "Reset Complete", "All values have been reset to their initial states.");
 }
-

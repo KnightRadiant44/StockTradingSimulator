@@ -4,6 +4,9 @@
 #include <QObject>
 #include <string>
 #include <fstream>
+#include <vector>
+#include <QtCharts/QtCharts>
+
 class TradingStrategy;
 class RiskManagement;
 class Market;
@@ -16,6 +19,8 @@ public:
     ~TradingBot();
     void recordTrade(const std::string& action, double price, int quantity);
     void resetToInitialState();
+    std::vector<double> stockPriceHistory;
+    std::vector<double> balanceHistory;
 
     // Getters
     double getCurrentPrice() const;
@@ -46,18 +51,20 @@ public:
     bool isSimulationComplete() const;
     void updateTotalActions();
 
+    // Graph generation functions
+    void generateGraphs();
+    void generateBalanceGraph();
+    void generateStockPriceGraph();
 
 private:
     class TradingBotImpl;
     TradingBotImpl* pImpl;
     std::ofstream tradeFile;
-
-    void logTrade(int day, double currentPrice, const std::string& tradeAction, double actionTaken);  // Add this line
+    void logTrade(int day, double currentPrice, const std::string& tradeAction, double actionTaken);
 
 signals:
     void updateUI();
     void simulationComplete();
-
 };
 
 #endif // TRADINGBOT_H
