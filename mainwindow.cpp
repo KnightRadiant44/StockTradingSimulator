@@ -138,7 +138,7 @@ void MainWindow::promptForStrategyChange()
 
     QMessageBox msgBox;
     msgBox.setText("Do you want to change the trading strategy?");
-    msgBox.setInformativeText("Current strategy: " + QString::fromStdString(tradingBot->getCurrentStrategyName()));
+    msgBox.setInformativeText("Market Event: " + QString::fromStdString(tradingBot->getLastMarketEvent()));
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     msgBox.setDefaultButton(QMessageBox::No);
 

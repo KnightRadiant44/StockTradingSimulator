@@ -672,9 +672,9 @@
    <widget class="Line" name="Divider2">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>178</x>
       <y>0</y>
-      <width>261</width>
+      <width>20</width>
       <height>800</height>
      </rect>
     </property>
@@ -717,7 +717,7 @@
      <rect>
       <x>0</x>
       <y>20</y>
-      <width>331</width>
+      <width>187</width>
       <height>16</height>
      </rect>
     </property>
@@ -728,9 +728,9 @@
    <widget class="Line" name="MidBotLine">
     <property name="geometry">
      <rect>
-      <x>327</x>
+      <x>187</x>
       <y>600</y>
-      <width>901</width>
+      <width>1041</width>
       <height>20</height>
      </rect>
     </property>
@@ -912,9 +912,9 @@
    <widget class="QTextBrowser" name="TradesTakenBox">
     <property name="geometry">
      <rect>
-      <x>327</x>
+      <x>187</x>
       <y>610</y>
-      <width>901</width>
+      <width>1041</width>
       <height>141</height>
      </rect>
     </property>
@@ -1009,7 +1009,7 @@
      <rect>
       <x>0</x>
       <y>310</y>
-      <width>331</width>
+      <width>187</width>
       <height>16</height>
      </rect>
     </property>
@@ -1155,7 +1155,7 @@
      <rect>
       <x>0</x>
       <y>140</y>
-      <width>331</width>
+      <width>187</width>
       <height>16</height>
      </rect>
     </property>
@@ -1518,7 +1518,7 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="TradeStrats"/>
   <buttongroup name="NumDay"/>
+  <buttongroup name="TradeStrats"/>
  </buttongroups>
 </ui>
