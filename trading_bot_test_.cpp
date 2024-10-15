@@ -100,9 +100,23 @@ int test() {
 
     return 0;
 }
+int test9() {
+    std::cout << "Starting test suite..." << std::endl;
+    TestSuite suite;
+
+    // Add tests as before...
+
+    std::cout << "Running all tests..." << std::endl;
+    suite.runTests();
+
+    std::cout << "Test suite completed." << std::endl;
+    return 0;
+}
 
 
 // Main function to run the tests
-int main1() {
-    return test() ? 0 : 1; // Return 0 if tests passed, 1 otherwise
+int main() {
+    std::cout << "Running TradingBot tests..." << std::endl;
+    return test();
 }
+

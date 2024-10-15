@@ -1,4 +1,4 @@
-# Install script for directory: /Users/shxhid01/Downloads/TradingSimulation
+# Install script for directory: /Users/shxhid01/Downloads/TradingSimulation copy
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,7 +38,7 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/." TYPE DIRECTORY FILES "/Users/shxhid01/Downloads/TradingSimulation/build/Trading.app" USE_SOURCE_PERMISSIONS)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/." TYPE DIRECTORY FILES "/Users/shxhid01/Downloads/TradingSimulation copy/build/Trading.app" USE_SOURCE_PERMISSIONS)
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/./Trading.app/Contents/MacOS/Trading" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/./Trading.app/Contents/MacOS/Trading")
     execute_process(COMMAND /usr/bin/install_name_tool
@@ -63,6 +63,6 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-  file(WRITE "/Users/shxhid01/Downloads/TradingSimulation/build/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "/Users/shxhid01/Downloads/TradingSimulation copy/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

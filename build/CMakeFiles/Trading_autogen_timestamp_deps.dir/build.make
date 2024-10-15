@@ -53,10 +53,10 @@ RM = /opt/homebrew/Cellar/cmake/3.30.5/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/shxhid01/Downloads/TradingSimulation
+CMAKE_SOURCE_DIR = "/Users/shxhid01/Downloads/TradingSimulation copy"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/shxhid01/Downloads/TradingSimulation/build
+CMAKE_BINARY_DIR = "/Users/shxhid01/Downloads/TradingSimulation copy/build"
 
 # Utility rule file for Trading_autogen_timestamp_deps.
 
@@ -78,6 +78,6 @@ CMakeFiles/Trading_autogen_timestamp_deps.dir/clean:
 .PHONY : CMakeFiles/Trading_autogen_timestamp_deps.dir/clean
 
 CMakeFiles/Trading_autogen_timestamp_deps.dir/depend:
-	cd /Users/shxhid01/Downloads/TradingSimulation/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/shxhid01/Downloads/TradingSimulation /Users/shxhid01/Downloads/TradingSimulation /Users/shxhid01/Downloads/TradingSimulation/build /Users/shxhid01/Downloads/TradingSimulation/build /Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles/Trading_autogen_timestamp_deps.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd "/Users/shxhid01/Downloads/TradingSimulation copy/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/Users/shxhid01/Downloads/TradingSimulation copy" "/Users/shxhid01/Downloads/TradingSimulation copy" "/Users/shxhid01/Downloads/TradingSimulation copy/build" "/Users/shxhid01/Downloads/TradingSimulation copy/build" "/Users/shxhid01/Downloads/TradingSimulation copy/build/CMakeFiles/Trading_autogen_timestamp_deps.dir/DependInfo.cmake" "--color=$(COLOR)"
 .PHONY : CMakeFiles/Trading_autogen_timestamp_deps.dir/depend
 

@@ -1,2 +1,4 @@
-set(__QT_DEPLOY_TARGET_Trading_FILE /Users/shxhid01/Downloads/TradingSimulation/build/Trading.app/Contents/MacOS/Trading)
+set(__QT_DEPLOY_TARGET_Trading_FILE /Users/shxhid01/Downloads/TradingSimulation copy/build/Trading.app/Contents/MacOS/Trading)
 set(__QT_DEPLOY_TARGET_Trading_TYPE EXECUTABLE)
+set(__QT_DEPLOY_TARGET_trading_bot_test_FILE /Users/shxhid01/Downloads/TradingSimulation copy/build/trading_bot_test)
+set(__QT_DEPLOY_TARGET_trading_bot_test_TYPE EXECUTABLE)

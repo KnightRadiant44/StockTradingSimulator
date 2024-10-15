@@ -15,10 +15,8 @@ MainWindow::MainWindow(const QString &username, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow),
     updateTimer(nullptr), tradingBot(nullptr)
 {
-    //Setup the UI elements
-    ui->setupUi(this); 
-    //Set the username display
-    ui->UserName->setText(username); 
+    ui->setupUi(this); // Setup the UI elements
+    ui->UserName->setText(username); // Set the username display
 
     ui->StockGraph->setScene(new QGraphicsScene(this));
     ui->BalGraph->setScene(new QGraphicsScene(this));
@@ -27,41 +25,37 @@ MainWindow::MainWindow(const QString &username, QWidget *parent)
     connect(tradingBot, &TradingBot::simulationComplete, this, &MainWindow::onSimulationComplete);
     connect(tradingBot, &TradingBot::simulationComplete, this, &MainWindow::updateGraphs);
 
-    //Connect button signals to corresponding slots
+    // Connect button signals to corresponding slots
     connect(ui->StartSim, &QPushButton::clicked, this, &MainWindow::onConfirmButtonClicked);
     connect(ui->exitButton, &QPushButton::clicked, this, &MainWindow::on_exitButton_clicked);
     connect(ui->HelpButton, &QPushButton::clicked, this, &MainWindow::on_HelpButton_clicked);
     connect(ui->ResetButton, &QPushButton::clicked, this, &MainWindow::OnResetButtonClicked);
-    //Set window title
+    // Set window title
     setWindowTitle("Trading Stock Simulation - " + username);
-    //Set initial values for UI elements
+    // Set initial values for UI elements
     ValuesSet();
 }
 
-//Destructor for the MainWindow class
+// Destructor for the MainWindow class
 MainWindow::~MainWindow()
 {
-    //Stop and delete the update timer if it exists
+    // Stop and delete the update timer if it exists
     if (updateTimer) {
-        //Stop the timer
-        updateTimer->stop(); 
-        //Delete the timer object
-        delete updateTimer;   
+        updateTimer->stop(); // Stop the timer
+        delete updateTimer;   // Delete the timer object
     }
-    //Delete TradingBot object
-    delete tradingBot; 
-    //Delete UI object
-    delete ui; 
+    delete tradingBot; // Delete TradingBot object
+    delete ui; // Delete UI object
 }
 
-//Function to update UI elements with values from the trading bot
+// Function to update UI elements with values from the trading bot
 void MainWindow::ValuesSet()
 {
-    //Update various UI components with current values from the trading bot
+    // Update various UI components with current values from the trading bot
     ui->CurrentPriceNum->setNum(tradingBot->getCurrentPrice());
     ui->TotalCurrentValueNum->setNum(tradingBot->getTotalValue());
 
-    //Update additional UI elements with trading bot values
+    // Update additional UI elements with trading bot values
     ui->Bal_User->setNum(tradingBot->getBalance());
     ui->StockNum->setNum(tradingBot->getOwnedStocks());
     ui->CumReturnNum->setNum(tradingBot->getTotalReturn() * 100);
@@ -81,19 +75,19 @@ void MainWindow::ValuesSet()
 
 }
 
-//Slot function triggered when the Start Simulation button is clicked
+// Slot function triggered when the Start Simulation button is clicked
 void MainWindow::onConfirmButtonClicked()
 {
     int strategyIndex = getSelectedStrategyIndex();
     int days = getSelectedDays();
 
-    //Check if a strategy has been selected
+    // Check if a strategy has been selected
     if (strategyIndex == -1) {
         QMessageBox::warning(this, "No Strategy Selection", "Please select a strategy before confirming.");
         return;
     }
 
-    //Check if a valid number of days has been selected
+    // Check if a valid number of days has been selected
     if (days == 0) {
         QMessageBox::warning(this, "No Day Selection", "Please select a number of days before confirming.");
         return;
@@ -114,16 +108,15 @@ void MainWindow::onConfirmButtonClicked()
     tradingBot->setStrategy(strategyIndex);
     tradingBot->initializeSimulation(days);
 
-    //Initialize the update timer if it hasn't been already
+    // Initialize the update timer if it hasn't been already
     if (!updateTimer) {
         updateTimer = new QTimer(this);
         connect(updateTimer, &QTimer::timeout, this, &MainWindow::executeNextTradingDay);
     }
-    //Execute a day every 0.01 seconds or 10 milliseconds
-    updateTimer->start(1);
+    updateTimer->start(1); // Execute a day every 0.01 seconds or 10 milliseconds
 }
 
-//Function to execute the next trading day
+// Function to execute the next trading day
 void MainWindow::executeNextTradingDay()
 {
     if (!tradingBot->isSimulationComplete()) {
@@ -143,8 +136,7 @@ void MainWindow::executeNextTradingDay()
 
 void MainWindow::promptForStrategyChange()
 {
-    //Pause the simulation
-    updateTimer->stop();
+    updateTimer->stop(); // Pause the simulation
 
     QMessageBox msgBox;
     msgBox.setText("Do you want to change the trading strategy?");
@@ -155,7 +147,7 @@ void MainWindow::promptForStrategyChange()
     int ret = msgBox.exec();
 
     if (ret == QMessageBox::Yes) {
-        //Show strategy selection dialog
+        // Show strategy selection dialog
         QStringList strategies;
         strategies << "Buy and Hold" << "Mean Reversion" << "Trend Following" << "Random" << "Moving Average";
 
@@ -170,30 +162,29 @@ void MainWindow::promptForStrategyChange()
             QMessageBox::information(this, "Strategy Changed", "New strategy: " + strategy);
         }
     }
-    //Resume the simulation
-    updateTimer->start(); 
+
+    updateTimer->start(); // Resume the simulation
 }
 
 
-//Function to update values from the trading bot
+// Function to update values from the trading bot
 void MainWindow::updateUIFromBot()
 {
-    //Refresh the UI with the latest values from the trading bot
-    ValuesSet(); 
+    ValuesSet(); // Refresh the UI with the latest values from the trading bot
 }
 
-//Slot function triggered when the simulation is complete
+// Slot function triggered when the simulation is complete
 void MainWindow::onSimulationComplete()
 {
-    //Generate graphs
+    // Generate graphs
     tradingBot->generateGraphs();
 
 
-    //Construct the path to trades_taken.txt dynamically
+    // Construct the path to trades_taken.txt dynamically
     QString homeDir = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     QString tradesFilePath = homeDir + "/Documents/trades_taken.txt";
 
-    //Read and display the contents of trades_taken.txt
+    // Read and display the contents of trades_taken.txt
     QFile tradesFile(tradesFilePath);
     if (tradesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&tradesFile);
@@ -205,7 +196,7 @@ void MainWindow::onSimulationComplete()
     }
 }
 
-//Function to get the selected strategy index
+// Function to get the selected strategy index
 int MainWindow::getSelectedStrategyIndex() const
 {
     if (ui->BuyAndHold->isChecked()) return 0;
@@ -216,7 +207,7 @@ int MainWindow::getSelectedStrategyIndex() const
     return -1; // No strategy selected
 }
 
-//Function to get the selected number of days
+// Function to get the selected number of days
 int MainWindow::getSelectedDays() const
 {
     if (ui->Day50->isChecked()) return 50;
@@ -230,11 +221,10 @@ int MainWindow::getSelectedDays() const
     return 0; // No days selected
 }
 
-//Slot function triggered when the exit button is clicked
+// Slot function triggered when the exit button is clicked
 void MainWindow::on_exitButton_clicked()
 {
-    / Close the application
-    QApplication::quit(); 
+    QApplication::quit(); // Close the application
 }
 
 
@@ -250,23 +240,24 @@ void MainWindow::on_HelpButton_clicked()
     QMessageBox::information(this, "Help - Instructions", instructions);
 }
 
-//Slot function triggered when the reset button is clicked
+
 void MainWindow::OnResetButtonClicked()
+    // Slot function triggered when the reset button is clicked
 {
-    //Reset the TradingBot to its initial state
+    // Reset the TradingBot to its initial state
     tradingBot->resetToInitialState();
 
-    //Reset the UI elements to reflect initial state
+    // Reset the UI elements to reflect initial state
     ValuesSet(); // This will refresh the UI with the initial values from TradingBot
 
-    //Optionally reset any other UI elements, like radio buttons or text fields
+    // Optionally reset any other UI elements, like radio buttons or text fields
     ui->BuyAndHold->setChecked(false);
     ui->MeanReversion->setChecked(false);
     ui->MovingAvg->setChecked(false);
     ui->TrendFollowing->setChecked(false);
     ui->Random->setChecked(false);
 
-    //Reset day selection buttons (if needed)
+    // Reset day selection buttons (if needed)
     ui->Day50->setChecked(false);
     ui->Day100->setChecked(false);
     ui->Day150->setChecked(false);
@@ -280,31 +271,36 @@ void MainWindow::OnResetButtonClicked()
 }
 
 void MainWindow::updateGraphs() {
-    //Load stock graph
+    // Load stock graph
     QString stockGraphPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
                              + "/TradingSimulation/" + username + "_stock_price_history.png";
     QPixmap stockGraph(stockGraphPath);
     if (!stockGraph.isNull()) {
-        //Clear any existing items in StockGraph
+        // Clear any existing items in StockGraph
         ui->StockGraph->scene()->clear();
-        //Create a pixmap item and add it to the existing scene
+
+        // Create a pixmap item and add it to the existing scene
         QGraphicsPixmapItem *stockPixmapItem = new QGraphicsPixmapItem(stockGraph);
         ui->StockGraph->scene()->addItem(stockPixmapItem);
-        //Fit the view to the pixmap item
+
+        // Fit the view to the pixmap item
         ui->StockGraph->fitInView(stockPixmapItem, Qt::KeepAspectRatio);
     } else {
         QMessageBox::warning(this, "Error", "Stock graph image could not be loaded.");
     }
-    //Load balance graph
+
+    // Load balance graph
     QString balanceGraphPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
                                + "/TradingSimulation/" + username + "_balance_history.png";
     QPixmap balanceGraph(balanceGraphPath);
     if (!balanceGraph.isNull()) {
         // Clear any existing items in BalGraph
         ui->BalGraph->scene()->clear();
+
         // Create a pixmap item and add it to the existing scene
         QGraphicsPixmapItem *balancePixmapItem = new QGraphicsPixmapItem(balanceGraph);
         ui->BalGraph->scene()->addItem(balancePixmapItem);
+
         // Fit the view to the pixmap item
         ui->BalGraph->fitInView(balancePixmapItem, Qt::KeepAspectRatio);
     } else {

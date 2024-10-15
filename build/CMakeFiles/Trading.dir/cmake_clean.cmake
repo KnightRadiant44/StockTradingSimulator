@@ -12,8 +12,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/Trading.dir/main.cpp.o.d"
   "CMakeFiles/Trading.dir/mainwindow.cpp.o"
   "CMakeFiles/Trading.dir/mainwindow.cpp.o.d"
-  "CMakeFiles/Trading.dir/trading_bot_test_.cpp.o"
-  "CMakeFiles/Trading.dir/trading_bot_test_.cpp.o.d"
   "Trading.app/Contents/MacOS/Trading"
   "Trading.pdb"
   "Trading_autogen/mocs_compilation.cpp"

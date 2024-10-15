@@ -30,9 +30,9 @@ set(PROJECT_SOURCES
     RiskManagement.h
     TradingStrategy.h
     TrendFollowing.h
-    trading_bot_test_.cpp  # Ensure your test file is included here
 )
 
+# Main Trading executable
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Trading
         MANUAL_FINALIZATION
@@ -53,6 +53,22 @@ set_target_properties(Trading PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
+
+# Test executable
+add_executable(trading_bot_test
+    trading_bot_test_.cpp
+    TradingBot.cpp
+    # Add other necessary source files for the test here
+)
+
+target_link_libraries(trading_bot_test PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Charts
+)
+
+# Include directories for both executables
+target_include_directories(Trading PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(trading_bot_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 include(GNUInstallDirs)
 install(TARGETS Trading

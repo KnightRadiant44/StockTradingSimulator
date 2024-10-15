@@ -57,10 +57,10 @@ RM = /opt/homebrew/Cellar/cmake/3.30.5/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/shxhid01/Downloads/TradingSimulation
+CMAKE_SOURCE_DIR = "/Users/shxhid01/Downloads/TradingSimulation copy"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/shxhid01/Downloads/TradingSimulation/build
+CMAKE_BINARY_DIR = "/Users/shxhid01/Downloads/TradingSimulation copy/build"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,9 +132,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles /Users/shxhid01/Downloads/TradingSimulation/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/shxhid01/Downloads/TradingSimulation copy/build/CMakeFiles" "/Users/shxhid01/Downloads/TradingSimulation copy/build//CMakeFiles/progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/shxhid01/Downloads/TradingSimulation copy/build/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -175,6 +175,19 @@ Trading/fast:
 .PHONY : Trading/fast
 
 #=============================================================================
+# Target rules for targets named trading_bot_test
+
+# Build rule for target.
+trading_bot_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 trading_bot_test
+.PHONY : trading_bot_test
+
+# fast build rule for target.
+trading_bot_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trading_bot_test.dir/build.make CMakeFiles/trading_bot_test.dir/build
+.PHONY : trading_bot_test/fast
+
+#=============================================================================
 # Target rules for targets named Trading_autogen_timestamp_deps
 
 # Build rule for target.
@@ -200,12 +213,39 @@ Trading_autogen/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Trading_autogen.dir/build.make CMakeFiles/Trading_autogen.dir/build
 .PHONY : Trading_autogen/fast
 
+#=============================================================================
+# Target rules for targets named trading_bot_test_autogen_timestamp_deps
+
+# Build rule for target.
+trading_bot_test_autogen_timestamp_deps: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 trading_bot_test_autogen_timestamp_deps
+.PHONY : trading_bot_test_autogen_timestamp_deps
+
+# fast build rule for target.
+trading_bot_test_autogen_timestamp_deps/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trading_bot_test_autogen_timestamp_deps.dir/build.make CMakeFiles/trading_bot_test_autogen_timestamp_deps.dir/build
+.PHONY : trading_bot_test_autogen_timestamp_deps/fast
+
+#=============================================================================
+# Target rules for targets named trading_bot_test_autogen
+
+# Build rule for target.
+trading_bot_test_autogen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 trading_bot_test_autogen
+.PHONY : trading_bot_test_autogen
+
+# fast build rule for target.
+trading_bot_test_autogen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trading_bot_test_autogen.dir/build.make CMakeFiles/trading_bot_test_autogen.dir/build
+.PHONY : trading_bot_test_autogen/fast
+
 TradingBot.o: TradingBot.cpp.o
 .PHONY : TradingBot.o
 
 # target to build an object file
 TradingBot.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Trading.dir/build.make CMakeFiles/Trading.dir/TradingBot.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trading_bot_test.dir/build.make CMakeFiles/trading_bot_test.dir/TradingBot.cpp.o
 .PHONY : TradingBot.cpp.o
 
 TradingBot.i: TradingBot.cpp.i
@@ -214,6 +254,7 @@ TradingBot.i: TradingBot.cpp.i
 # target to preprocess a source file
 TradingBot.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Trading.dir/build.make CMakeFiles/Trading.dir/TradingBot.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trading_bot_test.dir/build.make CMakeFiles/trading_bot_test.dir/TradingBot.cpp.i
 .PHONY : TradingBot.cpp.i
 
 TradingBot.s: TradingBot.cpp.s
@@ -222,6 +263,7 @@ TradingBot.s: TradingBot.cpp.s
 # target to generate assembly for a file
 TradingBot.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Trading.dir/build.make CMakeFiles/Trading.dir/TradingBot.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trading_bot_test.dir/build.make CMakeFiles/trading_bot_test.dir/TradingBot.cpp.s
 .PHONY : TradingBot.cpp.s
 
 Trading_autogen/mocs_compilation.o: Trading_autogen/mocs_compilation.cpp.o
@@ -325,7 +367,7 @@ trading_bot_test_.o: trading_bot_test_.cpp.o
 
 # target to build an object file
 trading_bot_test_.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Trading.dir/build.make CMakeFiles/Trading.dir/trading_bot_test_.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trading_bot_test.dir/build.make CMakeFiles/trading_bot_test.dir/trading_bot_test_.cpp.o
 .PHONY : trading_bot_test_.cpp.o
 
 trading_bot_test_.i: trading_bot_test_.cpp.i
@@ -333,7 +375,7 @@ trading_bot_test_.i: trading_bot_test_.cpp.i
 
 # target to preprocess a source file
 trading_bot_test_.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Trading.dir/build.make CMakeFiles/Trading.dir/trading_bot_test_.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trading_bot_test.dir/build.make CMakeFiles/trading_bot_test.dir/trading_bot_test_.cpp.i
 .PHONY : trading_bot_test_.cpp.i
 
 trading_bot_test_.s: trading_bot_test_.cpp.s
@@ -341,8 +383,32 @@ trading_bot_test_.s: trading_bot_test_.cpp.s
 
 # target to generate assembly for a file
 trading_bot_test_.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Trading.dir/build.make CMakeFiles/Trading.dir/trading_bot_test_.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trading_bot_test.dir/build.make CMakeFiles/trading_bot_test.dir/trading_bot_test_.cpp.s
 .PHONY : trading_bot_test_.cpp.s
+
+trading_bot_test_autogen/mocs_compilation.o: trading_bot_test_autogen/mocs_compilation.cpp.o
+.PHONY : trading_bot_test_autogen/mocs_compilation.o
+
+# target to build an object file
+trading_bot_test_autogen/mocs_compilation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trading_bot_test.dir/build.make CMakeFiles/trading_bot_test.dir/trading_bot_test_autogen/mocs_compilation.cpp.o
+.PHONY : trading_bot_test_autogen/mocs_compilation.cpp.o
+
+trading_bot_test_autogen/mocs_compilation.i: trading_bot_test_autogen/mocs_compilation.cpp.i
+.PHONY : trading_bot_test_autogen/mocs_compilation.i
+
+# target to preprocess a source file
+trading_bot_test_autogen/mocs_compilation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trading_bot_test.dir/build.make CMakeFiles/trading_bot_test.dir/trading_bot_test_autogen/mocs_compilation.cpp.i
+.PHONY : trading_bot_test_autogen/mocs_compilation.cpp.i
+
+trading_bot_test_autogen/mocs_compilation.s: trading_bot_test_autogen/mocs_compilation.cpp.s
+.PHONY : trading_bot_test_autogen/mocs_compilation.s
+
+# target to generate assembly for a file
+trading_bot_test_autogen/mocs_compilation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trading_bot_test.dir/build.make CMakeFiles/trading_bot_test.dir/trading_bot_test_autogen/mocs_compilation.cpp.s
+.PHONY : trading_bot_test_autogen/mocs_compilation.cpp.s
 
 # Help Target
 help:
@@ -358,7 +424,10 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Trading_autogen"
 	@echo "... Trading_autogen_timestamp_deps"
+	@echo "... trading_bot_test_autogen"
+	@echo "... trading_bot_test_autogen_timestamp_deps"
 	@echo "... Trading"
+	@echo "... trading_bot_test"
 	@echo "... TradingBot.o"
 	@echo "... TradingBot.i"
 	@echo "... TradingBot.s"
@@ -377,6 +446,9 @@ help:
 	@echo "... trading_bot_test_.o"
 	@echo "... trading_bot_test_.i"
 	@echo "... trading_bot_test_.s"
+	@echo "... trading_bot_test_autogen/mocs_compilation.o"
+	@echo "... trading_bot_test_autogen/mocs_compilation.i"
+	@echo "... trading_bot_test_autogen/mocs_compilation.s"
 .PHONY : help
 
 

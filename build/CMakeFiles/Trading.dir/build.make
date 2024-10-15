@@ -53,10 +53,10 @@ RM = /opt/homebrew/Cellar/cmake/3.30.5/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/shxhid01/Downloads/TradingSimulation
+CMAKE_SOURCE_DIR = "/Users/shxhid01/Downloads/TradingSimulation copy"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/shxhid01/Downloads/TradingSimulation/build
+CMAKE_BINARY_DIR = "/Users/shxhid01/Downloads/TradingSimulation copy/build"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Trading.dir/depend.make
@@ -72,93 +72,79 @@ include CMakeFiles/Trading.dir/flags.make
 Trading_autogen/timestamp: /opt/homebrew/share/qt/libexec/moc
 Trading_autogen/timestamp: /opt/homebrew/share/qt/libexec/uic
 Trading_autogen/timestamp: CMakeFiles/Trading.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target Trading"
-	/opt/homebrew/Cellar/cmake/3.30.5/bin/cmake -E cmake_autogen /Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles/Trading_autogen.dir/AutogenInfo.json ""
-	/opt/homebrew/Cellar/cmake/3.30.5/bin/cmake -E touch /Users/shxhid01/Downloads/TradingSimulation/build/Trading_autogen/timestamp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="/Users/shxhid01/Downloads/TradingSimulation copy/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target Trading"
+	/opt/homebrew/Cellar/cmake/3.30.5/bin/cmake -E cmake_autogen "/Users/shxhid01/Downloads/TradingSimulation copy/build/CMakeFiles/Trading_autogen.dir/AutogenInfo.json" ""
+	/opt/homebrew/Cellar/cmake/3.30.5/bin/cmake -E touch "/Users/shxhid01/Downloads/TradingSimulation copy/build/Trading_autogen/timestamp"
 
 CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.o: CMakeFiles/Trading.dir/flags.make
 CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.o: Trading_autogen/mocs_compilation.cpp
 CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.o: CMakeFiles/Trading.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.o -MF CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.o.d -o CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.o -c /Users/shxhid01/Downloads/TradingSimulation/build/Trading_autogen/mocs_compilation.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/shxhid01/Downloads/TradingSimulation copy/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.o -MF CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.o.d -o CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.o -c "/Users/shxhid01/Downloads/TradingSimulation copy/build/Trading_autogen/mocs_compilation.cpp"
 
 CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/shxhid01/Downloads/TradingSimulation/build/Trading_autogen/mocs_compilation.cpp > CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/shxhid01/Downloads/TradingSimulation copy/build/Trading_autogen/mocs_compilation.cpp" > CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.i
 
 CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/shxhid01/Downloads/TradingSimulation/build/Trading_autogen/mocs_compilation.cpp -o CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/shxhid01/Downloads/TradingSimulation copy/build/Trading_autogen/mocs_compilation.cpp" -o CMakeFiles/Trading.dir/Trading_autogen/mocs_compilation.cpp.s
 
 CMakeFiles/Trading.dir/main.cpp.o: CMakeFiles/Trading.dir/flags.make
-CMakeFiles/Trading.dir/main.cpp.o: /Users/shxhid01/Downloads/TradingSimulation/main.cpp
+CMakeFiles/Trading.dir/main.cpp.o: /Users/shxhid01/Downloads/TradingSimulation\ copy/main.cpp
 CMakeFiles/Trading.dir/main.cpp.o: CMakeFiles/Trading.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Trading.dir/main.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Trading.dir/main.cpp.o -MF CMakeFiles/Trading.dir/main.cpp.o.d -o CMakeFiles/Trading.dir/main.cpp.o -c /Users/shxhid01/Downloads/TradingSimulation/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/shxhid01/Downloads/TradingSimulation copy/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Trading.dir/main.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Trading.dir/main.cpp.o -MF CMakeFiles/Trading.dir/main.cpp.o.d -o CMakeFiles/Trading.dir/main.cpp.o -c "/Users/shxhid01/Downloads/TradingSimulation copy/main.cpp"
 
 CMakeFiles/Trading.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Trading.dir/main.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/shxhid01/Downloads/TradingSimulation/main.cpp > CMakeFiles/Trading.dir/main.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/shxhid01/Downloads/TradingSimulation copy/main.cpp" > CMakeFiles/Trading.dir/main.cpp.i
 
 CMakeFiles/Trading.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Trading.dir/main.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/shxhid01/Downloads/TradingSimulation/main.cpp -o CMakeFiles/Trading.dir/main.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/shxhid01/Downloads/TradingSimulation copy/main.cpp" -o CMakeFiles/Trading.dir/main.cpp.s
 
 CMakeFiles/Trading.dir/mainwindow.cpp.o: CMakeFiles/Trading.dir/flags.make
-CMakeFiles/Trading.dir/mainwindow.cpp.o: /Users/shxhid01/Downloads/TradingSimulation/mainwindow.cpp
+CMakeFiles/Trading.dir/mainwindow.cpp.o: /Users/shxhid01/Downloads/TradingSimulation\ copy/mainwindow.cpp
 CMakeFiles/Trading.dir/mainwindow.cpp.o: CMakeFiles/Trading.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Trading.dir/mainwindow.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Trading.dir/mainwindow.cpp.o -MF CMakeFiles/Trading.dir/mainwindow.cpp.o.d -o CMakeFiles/Trading.dir/mainwindow.cpp.o -c /Users/shxhid01/Downloads/TradingSimulation/mainwindow.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/shxhid01/Downloads/TradingSimulation copy/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Trading.dir/mainwindow.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Trading.dir/mainwindow.cpp.o -MF CMakeFiles/Trading.dir/mainwindow.cpp.o.d -o CMakeFiles/Trading.dir/mainwindow.cpp.o -c "/Users/shxhid01/Downloads/TradingSimulation copy/mainwindow.cpp"
 
 CMakeFiles/Trading.dir/mainwindow.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Trading.dir/mainwindow.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/shxhid01/Downloads/TradingSimulation/mainwindow.cpp > CMakeFiles/Trading.dir/mainwindow.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/shxhid01/Downloads/TradingSimulation copy/mainwindow.cpp" > CMakeFiles/Trading.dir/mainwindow.cpp.i
 
 CMakeFiles/Trading.dir/mainwindow.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Trading.dir/mainwindow.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/shxhid01/Downloads/TradingSimulation/mainwindow.cpp -o CMakeFiles/Trading.dir/mainwindow.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/shxhid01/Downloads/TradingSimulation copy/mainwindow.cpp" -o CMakeFiles/Trading.dir/mainwindow.cpp.s
 
 CMakeFiles/Trading.dir/logindialog.cpp.o: CMakeFiles/Trading.dir/flags.make
-CMakeFiles/Trading.dir/logindialog.cpp.o: /Users/shxhid01/Downloads/TradingSimulation/logindialog.cpp
+CMakeFiles/Trading.dir/logindialog.cpp.o: /Users/shxhid01/Downloads/TradingSimulation\ copy/logindialog.cpp
 CMakeFiles/Trading.dir/logindialog.cpp.o: CMakeFiles/Trading.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Trading.dir/logindialog.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Trading.dir/logindialog.cpp.o -MF CMakeFiles/Trading.dir/logindialog.cpp.o.d -o CMakeFiles/Trading.dir/logindialog.cpp.o -c /Users/shxhid01/Downloads/TradingSimulation/logindialog.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/shxhid01/Downloads/TradingSimulation copy/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Trading.dir/logindialog.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Trading.dir/logindialog.cpp.o -MF CMakeFiles/Trading.dir/logindialog.cpp.o.d -o CMakeFiles/Trading.dir/logindialog.cpp.o -c "/Users/shxhid01/Downloads/TradingSimulation copy/logindialog.cpp"
 
 CMakeFiles/Trading.dir/logindialog.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Trading.dir/logindialog.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/shxhid01/Downloads/TradingSimulation/logindialog.cpp > CMakeFiles/Trading.dir/logindialog.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/shxhid01/Downloads/TradingSimulation copy/logindialog.cpp" > CMakeFiles/Trading.dir/logindialog.cpp.i
 
 CMakeFiles/Trading.dir/logindialog.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Trading.dir/logindialog.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/shxhid01/Downloads/TradingSimulation/logindialog.cpp -o CMakeFiles/Trading.dir/logindialog.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/shxhid01/Downloads/TradingSimulation copy/logindialog.cpp" -o CMakeFiles/Trading.dir/logindialog.cpp.s
 
 CMakeFiles/Trading.dir/TradingBot.cpp.o: CMakeFiles/Trading.dir/flags.make
-CMakeFiles/Trading.dir/TradingBot.cpp.o: /Users/shxhid01/Downloads/TradingSimulation/TradingBot.cpp
+CMakeFiles/Trading.dir/TradingBot.cpp.o: /Users/shxhid01/Downloads/TradingSimulation\ copy/TradingBot.cpp
 CMakeFiles/Trading.dir/TradingBot.cpp.o: CMakeFiles/Trading.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Trading.dir/TradingBot.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Trading.dir/TradingBot.cpp.o -MF CMakeFiles/Trading.dir/TradingBot.cpp.o.d -o CMakeFiles/Trading.dir/TradingBot.cpp.o -c /Users/shxhid01/Downloads/TradingSimulation/TradingBot.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/shxhid01/Downloads/TradingSimulation copy/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Trading.dir/TradingBot.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Trading.dir/TradingBot.cpp.o -MF CMakeFiles/Trading.dir/TradingBot.cpp.o.d -o CMakeFiles/Trading.dir/TradingBot.cpp.o -c "/Users/shxhid01/Downloads/TradingSimulation copy/TradingBot.cpp"
 
 CMakeFiles/Trading.dir/TradingBot.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Trading.dir/TradingBot.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/shxhid01/Downloads/TradingSimulation/TradingBot.cpp > CMakeFiles/Trading.dir/TradingBot.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/shxhid01/Downloads/TradingSimulation copy/TradingBot.cpp" > CMakeFiles/Trading.dir/TradingBot.cpp.i
 
 CMakeFiles/Trading.dir/TradingBot.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Trading.dir/TradingBot.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/shxhid01/Downloads/TradingSimulation/TradingBot.cpp -o CMakeFiles/Trading.dir/TradingBot.cpp.s
-
-CMakeFiles/Trading.dir/trading_bot_test_.cpp.o: CMakeFiles/Trading.dir/flags.make
-CMakeFiles/Trading.dir/trading_bot_test_.cpp.o: /Users/shxhid01/Downloads/TradingSimulation/trading_bot_test_.cpp
-CMakeFiles/Trading.dir/trading_bot_test_.cpp.o: CMakeFiles/Trading.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Trading.dir/trading_bot_test_.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Trading.dir/trading_bot_test_.cpp.o -MF CMakeFiles/Trading.dir/trading_bot_test_.cpp.o.d -o CMakeFiles/Trading.dir/trading_bot_test_.cpp.o -c /Users/shxhid01/Downloads/TradingSimulation/trading_bot_test_.cpp
-
-CMakeFiles/Trading.dir/trading_bot_test_.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Trading.dir/trading_bot_test_.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/shxhid01/Downloads/TradingSimulation/trading_bot_test_.cpp > CMakeFiles/Trading.dir/trading_bot_test_.cpp.i
-
-CMakeFiles/Trading.dir/trading_bot_test_.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Trading.dir/trading_bot_test_.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/shxhid01/Downloads/TradingSimulation/trading_bot_test_.cpp -o CMakeFiles/Trading.dir/trading_bot_test_.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/shxhid01/Downloads/TradingSimulation copy/TradingBot.cpp" -o CMakeFiles/Trading.dir/TradingBot.cpp.s
 
 # Object files for target Trading
 Trading_OBJECTS = \
@@ -166,8 +152,7 @@ Trading_OBJECTS = \
 "CMakeFiles/Trading.dir/main.cpp.o" \
 "CMakeFiles/Trading.dir/mainwindow.cpp.o" \
 "CMakeFiles/Trading.dir/logindialog.cpp.o" \
-"CMakeFiles/Trading.dir/TradingBot.cpp.o" \
-"CMakeFiles/Trading.dir/trading_bot_test_.cpp.o"
+"CMakeFiles/Trading.dir/TradingBot.cpp.o"
 
 # External object files for target Trading
 Trading_EXTERNAL_OBJECTS =
@@ -177,7 +162,6 @@ Trading.app/Contents/MacOS/Trading: CMakeFiles/Trading.dir/main.cpp.o
 Trading.app/Contents/MacOS/Trading: CMakeFiles/Trading.dir/mainwindow.cpp.o
 Trading.app/Contents/MacOS/Trading: CMakeFiles/Trading.dir/logindialog.cpp.o
 Trading.app/Contents/MacOS/Trading: CMakeFiles/Trading.dir/TradingBot.cpp.o
-Trading.app/Contents/MacOS/Trading: CMakeFiles/Trading.dir/trading_bot_test_.cpp.o
 Trading.app/Contents/MacOS/Trading: CMakeFiles/Trading.dir/build.make
 Trading.app/Contents/MacOS/Trading: /opt/homebrew/lib/QtCharts.framework/Versions/A/QtCharts
 Trading.app/Contents/MacOS/Trading: /opt/homebrew/lib/QtOpenGLWidgets.framework/Versions/A/QtOpenGLWidgets
@@ -186,7 +170,7 @@ Trading.app/Contents/MacOS/Trading: /opt/homebrew/lib/QtOpenGL.framework/Version
 Trading.app/Contents/MacOS/Trading: /opt/homebrew/lib/QtGui.framework/Versions/A/QtGui
 Trading.app/Contents/MacOS/Trading: /opt/homebrew/lib/QtCore.framework/Versions/A/QtCore
 Trading.app/Contents/MacOS/Trading: CMakeFiles/Trading.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable Trading.app/Contents/MacOS/Trading"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/shxhid01/Downloads/TradingSimulation copy/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable Trading.app/Contents/MacOS/Trading"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Trading.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -198,6 +182,6 @@ CMakeFiles/Trading.dir/clean:
 .PHONY : CMakeFiles/Trading.dir/clean
 
 CMakeFiles/Trading.dir/depend: Trading_autogen/timestamp
-	cd /Users/shxhid01/Downloads/TradingSimulation/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/shxhid01/Downloads/TradingSimulation /Users/shxhid01/Downloads/TradingSimulation /Users/shxhid01/Downloads/TradingSimulation/build /Users/shxhid01/Downloads/TradingSimulation/build /Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles/Trading.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd "/Users/shxhid01/Downloads/TradingSimulation copy/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/Users/shxhid01/Downloads/TradingSimulation copy" "/Users/shxhid01/Downloads/TradingSimulation copy" "/Users/shxhid01/Downloads/TradingSimulation copy/build" "/Users/shxhid01/Downloads/TradingSimulation copy/build" "/Users/shxhid01/Downloads/TradingSimulation copy/build/CMakeFiles/Trading.dir/DependInfo.cmake" "--color=$(COLOR)"
 .PHONY : CMakeFiles/Trading.dir/depend
 
