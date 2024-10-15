@@ -8,9 +8,9 @@ public:
     RandomStrategy() : MarketNeutralStrategy("Random") {}
     //Execute moving average strategy
     double execute(double currentPrice, const std::string& marketEvent) override {
-        //Calculates action
+        //Determines random action
         double action = (rand() % 3 - 1) * currentPrice * 0.01;
         return action;
     }
 };
-#endif // RANDOMSTRATEGY_H
+#endif //RANDOMSTRATEGY_H
