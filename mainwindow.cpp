@@ -18,8 +18,7 @@ MainWindow::MainWindow(const QString &username, QWidget *parent)
     ui->UserName->setText(username); // Set the username display
 
 
-    // Create and connect the TradingBot
-    tradingBot = new TradingBot(this);
+    tradingBot = new TradingBot(username,this);
     connect(tradingBot, &TradingBot::updateUI, this, &MainWindow::updateUIFromBot);
     connect(tradingBot, &TradingBot::simulationComplete, this, &MainWindow::onSimulationComplete);
 
@@ -194,7 +193,6 @@ void MainWindow::onSimulationComplete()
         QMessageBox::warning(this, "File Error", "Unable to open trades_taken.txt");
     }
 
-
     // You could add code here to display the generated graphs if desired
 }
 
@@ -269,6 +267,5 @@ void MainWindow::OnResetButtonClicked()
     ui->Day1000->setChecked(false);
     ui->Day2000->setChecked(false);
 
-    // Show a message indicating reset is complete (optional)
     QMessageBox::information(this, "Reset Complete", "All values have been reset to their initial states.");
 }

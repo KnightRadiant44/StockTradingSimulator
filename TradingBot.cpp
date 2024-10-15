@@ -18,9 +18,11 @@
 #include <QtCharts/QtCharts>
 #include <QApplication>
 #include <QMainWindow>
+#include <QtCharts>
+
 class TradingBot::TradingBotImpl {
 public:
-    TradingBotImpl() :
+    TradingBotImpl(const QString &username) :
         currentStrategy(nullptr),
         balance(10000),
         ownedStocks(0),
@@ -41,17 +43,18 @@ public:
         currentDay(0),
         totalDays(0),
         transactionFeePercentage(0.005),
-        slippageFactor(0.001)
+        slippageFactor(0.001),
+        username(username)
     {
+        // Constructor body
         strategies.push_back(new BuyAndHoldStrategy());
         strategies.push_back(new MeanReversionStrategy());
         strategies.push_back(new TrendFollowingStrategy());
         strategies.push_back(new RandomStrategy());
         strategies.push_back(new MovingAverageStrategy());
 
-        loadState();
         QString documentsPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-        tradesFilePath = documentsPath + "/trades_taken.txt";
+        tradesFilePath = documentsPath + "/TradingSimulation/" + username + "_trades_taken.txt";
     }
 
     ~TradingBotImpl() {
@@ -153,10 +156,9 @@ public:
             file.close();
         }
     }
-
     void saveState() {
         QString filePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) +
-                           "/TradingSimulation/saved_state.txt";
+                           "/TradingSimulation/" + username + "_saved_state.txt";
 
         QFile file(filePath);
         if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -171,19 +173,18 @@ public:
             out << "TotalReturn: " << totalReturn << "\n";
             out << "Volatility: " << volatility << "\n";
             out << "SharpeRatio: " << sharpeRatio << "\n";
-            out << "BuysSinceLastUpdate: " << buysSinceLastUpdate << "\n";  // Actions since last update
-            out << "SellsSinceLastUpdate: " << sellsSinceLastUpdate << "\n"; // Actions since last update
-            out << "HoldsSinceLastUpdate: " << holdsSinceLastUpdate << "\n"; // Actions since last update
+            out << "BuysSinceLastUpdate: " << buysSinceLastUpdate << "\n";
+            out << "SellsSinceLastUpdate: " << sellsSinceLastUpdate << "\n";
+            out << "HoldsSinceLastUpdate: " << holdsSinceLastUpdate << "\n";
             file.close();
         } else {
             QMessageBox::warning(nullptr, "File Error", "Unable to save state.");
         }
     }
 
-
     void loadState() {
         QString filePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) +
-                           "/TradingSimulation/saved_state.txt";
+                           "/TradingSimulation/" + username + "_saved_state.txt";
 
         QFile file(filePath);
         if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -197,9 +198,9 @@ public:
                     } else if (parts[0] == "OwnedStocks") {
                         ownedStocks = parts[1].toInt();
                     } else if (parts[0] == "TotalBuys") {
-                        totalBuys = parts[1].toInt(); // Total actions
+                        totalBuys = parts[1].toInt();
                     } else if (parts[0] == "TotalSells") {
-                        totalSells = parts[1].toInt(); // Total actions
+                        totalSells = parts[1].toInt();
                     } else if (parts[0] == "CurrentDay") {
                         currentDay = parts[1].toInt();
                     } else if (parts[0] == "MaxDrawdown") {
@@ -210,11 +211,11 @@ public:
                         volatility = parts[1].toDouble();
                     } else if (parts[0] == "SharpeRatio") {
                         sharpeRatio = parts[1].toDouble();
-                    } else if (parts[0] == "BuysSinceLastUpdate") { // Actions since last update
+                    } else if (parts[0] == "BuysSinceLastUpdate") {
                         buysSinceLastUpdate = parts[1].toInt();
-                    } else if (parts[0] == "SellsSinceLastUpdate") { // Actions since last update
+                    } else if (parts[0] == "SellsSinceLastUpdate") {
                         sellsSinceLastUpdate = parts[1].toInt();
-                    } else if (parts[0] == "HoldsSinceLastUpdate") { // Actions since last update
+                    } else if (parts[0] == "HoldsSinceLastUpdate") {
                         holdsSinceLastUpdate = parts[1].toInt();
                     }
                 }
@@ -222,40 +223,53 @@ public:
             file.close();
         } else {
             // Initialize to default values if the file doesn't exist
-            balance = 10000;
-            ownedStocks = 0;
-            totalBuys = 0;           // Total actions start from 0
-            totalSells = 0;          // Total actions start from 0
-            currentDay = 0;
-            maxDrawdown = 0;
-            totalReturn = 0;
-            volatility = 0;
-            sharpeRatio = 0;
-            buysSinceLastUpdate = 0; // Default for buys since last update
-            sellsSinceLastUpdate = 0; // Default for sells since last update
-            holdsSinceLastUpdate = 0; // Default for holds since last update
+            resetToInitialState();
         }
     }
 
+    void resetToInitialState() {
+        balance = 10000.0;
+        ownedStocks = 0;
+        totalReturn = 0.0;
+        maxDrawdown = 0.0;
+        volatility = 0.0;
+        sharpeRatio = 0.0;
+        lastUpdateValue = balance;
+        lastUpdateDay = 0;
+        buysSinceLastUpdate = 0;
+        sellsSinceLastUpdate = 0;
+        holdsSinceLastUpdate = 0;
+        totalBuys = 0;
+        totalSells = 0;
+        totalHolds = 0;
+        currentDay = 0;
+        balanceHistory.clear();
+        balanceHistory.push_back(balance);
+        stockPriceHistory.clear();
+        stockPriceHistory.push_back(market.getPrice());
+    }
 
-};
+    QString username;
+    std::vector<double> stockPriceHistory;
+    };
+
+
+
 
 // Constructor
-TradingBot::TradingBot(QObject *parent) : QObject(parent), pImpl(new TradingBotImpl()) {
+    TradingBot::TradingBot(const QString &username, QObject *parent)
+        : QObject(parent), pImpl(new TradingBotImpl(username)) {
+        pImpl->loadState();
+        QString documentsPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+        QString tradingSimFolder = documentsPath + "/TradingSimulation";
+        QDir().mkpath(tradingSimFolder);
+        QString tradeFilePath = tradingSimFolder + "/" + username + "_trades_taken.txt";
 
-    pImpl->loadState();  // Load the previous balance on initialization
-    QString documentsPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    QString tradingSimFolder = documentsPath + "/TradingSimulation";
-    QDir().mkpath(tradingSimFolder);
-    QString tradeFilePath = tradingSimFolder + "/trades_taken.txt";
-
-
-
-    tradeFile.open(tradeFilePath.toStdString(), std::ios::out | std::ios::trunc);
-    if (!tradeFile.is_open()) {
-        QMessageBox::warning(nullptr, "Error", "Couldn't open trades_taken.txt file. Please check file permissions.");
+        tradeFile.open(tradeFilePath.toStdString(), std::ios::out | std::ios::app);
+        if (!tradeFile.is_open()) {
+            QMessageBox::warning(nullptr, "Error", "Couldn't open trades_taken.txt file. Please check file permissions.");
+        }
     }
-}
 
 TradingBot::~TradingBot() {
     if (tradeFile.is_open()) {
@@ -314,87 +328,59 @@ void TradingBot::initializeSimulation(int days) {
 }
 
 void TradingBot::executeNextDay() {
-
-    pImpl->currentDay++;
+    // Update the day and generate market event
     double currentPrice = pImpl->market.getPrice();
-    pImpl->lastMarketEvent = pImpl->generateMarketEvent();
-    balanceHistory.push_back(pImpl->balance);
-    stockPriceHistory.push_back(currentPrice);
+    double totalValue = pImpl->balance + pImpl->ownedStocks * currentPrice;
+    pImpl->balanceHistory.push_back(totalValue);
+    pImpl->stockPriceHistory.push_back(currentPrice);
     pImpl->currentDay++;
     pImpl->lastMarketEvent = pImpl->generateMarketEvent();
-
+    // Adjust market conditions and risk based on the event
     pImpl->market.adjustVolatility(pImpl->lastMarketEvent);
     pImpl->market.adjustOverallTrend(pImpl->lastMarketEvent);
     pImpl->riskManager->adjustRiskTolerance(pImpl->lastMarketEvent);
 
+    // Execute trading strategy
     double action = pImpl->currentStrategy->execute(currentPrice, pImpl->lastMarketEvent);
     double adjustedAction = pImpl->riskManager->adjustPosition(action, currentPrice, pImpl->balance);
-
     currentPrice = pImpl->applySlippage(currentPrice);
 
+    // Determine trade action based on adjusted action
     std::string tradeAction;
     double actionTaken = 0;
-    logTrade(pImpl->currentDay, currentPrice, tradeAction, actionTaken);
-
-    // Execute buy action
-    if (adjustedAction > 0) {
+    if (adjustedAction > 0) { // Buy
         int stocksToBuy = static_cast<int>(adjustedAction * pImpl->balance / currentPrice);
         double cost = pImpl->applyTransactionFee(stocksToBuy * currentPrice);
         if (pImpl->balance >= cost) {
             pImpl->ownedStocks += stocksToBuy;
             pImpl->balance -= cost;
-            pImpl->saveState(); // Save the new balance after buying
             tradeAction = "Buy";
             actionTaken = stocksToBuy;
-            pImpl->buysSinceLastUpdate++; // Increment last update buys
+            pImpl->buysSinceLastUpdate++;
         } else {
             tradeAction = "Hold (Insufficient funds)";
-            pImpl->holdsSinceLastUpdate++; // Increment last update holds
+            pImpl->holdsSinceLastUpdate++;
         }
-    }
-    // Execute sell action
-    else if (adjustedAction < 0 && pImpl->ownedStocks > 0) {
+    } else if (adjustedAction < 0 && pImpl->ownedStocks > 0) { // Sell
         int stocksToSell = std::min(static_cast<int>(-adjustedAction * pImpl->ownedStocks), pImpl->ownedStocks);
         double revenue = pImpl->applyTransactionFee(stocksToSell * currentPrice);
         pImpl->ownedStocks -= stocksToSell;
         pImpl->balance += revenue;
-        pImpl->saveState(); // Save the new balance after selling
         tradeAction = "Sell";
         actionTaken = stocksToSell;
-        pImpl->sellsSinceLastUpdate++; // Increment last update sells
-    }
-    // No buy/sell action, just hold
-    else {
+        pImpl->sellsSinceLastUpdate++;
+    } else { // Hold
         tradeAction = "Hold";
-        pImpl->holdsSinceLastUpdate++; // Increment last update holds
+        pImpl->holdsSinceLastUpdate++;
     }
 
-    // Update total actions only if actions since last update are greater than zero
-    if (pImpl->buysSinceLastUpdate > 0 || pImpl->sellsSinceLastUpdate > 0 || pImpl->holdsSinceLastUpdate > 0) {
-        pImpl->totalBuys += pImpl->buysSinceLastUpdate;
-        pImpl->totalSells += pImpl->sellsSinceLastUpdate;
-        pImpl->totalHolds += pImpl->holdsSinceLastUpdate;
-    }
-
-    // Reset actions since last update to 0 for the next day
-    pImpl->buysSinceLastUpdate = 0;
-    pImpl->sellsSinceLastUpdate = 0;
-    pImpl->holdsSinceLastUpdate = 0;
-
-    double totalValue = pImpl->balance + pImpl->ownedStocks * currentPrice;
-    pImpl->balanceHistory.push_back(totalValue);
-
+    // Log trade and save the state
     pImpl->logTrade(pImpl->currentDay, currentPrice, tradeAction, actionTaken);
+    pImpl->saveState();
 
-    pImpl->lastUpdateValue = totalValue;
-    pImpl->lastUpdateDay = pImpl->currentDay;
-
-    pImpl->maxDrawdown = pImpl->calculateMaxDrawdown();
-    pImpl->totalReturn = pImpl->calculateCumulativeReturn();
-    pImpl->volatility = pImpl->calculateVolatility();
-    pImpl->sharpeRatio = pImpl->calculateSharpeRatio();
+    // Update statistics and balance history
     pImpl->balanceHistory.push_back(totalValue);
-    stockPriceHistory.push_back(currentPrice);  // Use this instead of pImpl->stockPriceHistory
+    // pImpl->stockPriceHistory.push_back(currentPrice);
 
     pImpl->lastUpdateValue = totalValue;
     pImpl->lastUpdateDay = pImpl->currentDay;
@@ -404,12 +390,15 @@ void TradingBot::executeNextDay() {
     pImpl->volatility = pImpl->calculateVolatility();
     pImpl->sharpeRatio = pImpl->calculateSharpeRatio();
 
+    // Emit update UI signal
     emit updateUI();
 
+    // Check if simulation is complete and emit signal
     if (isSimulationComplete()) {
         emit simulationComplete();
     }
 }
+
 
 
 bool TradingBot::isSimulationComplete() const {
@@ -431,8 +420,13 @@ void TradingBot::logTrade(int day, double currentPrice, const std::string& trade
 
 void TradingBot::resetToInitialState() {
     // Reset the trading bot's state to its initial values
+
     balanceHistory.clear();
     stockPriceHistory.clear();
+
+    balanceHistory.clear();
+    stockPriceHistory.clear();
+
     pImpl->balance = 10000.0;  // Initial balance
     pImpl->ownedStocks = 0;  // Reset owned stocks
     pImpl->totalReturn = 0.0;  // Reset total return
@@ -451,36 +445,37 @@ void TradingBot::resetToInitialState() {
     pImpl->balanceHistory.clear();
     pImpl->balanceHistory.push_back(pImpl->balance);
     pImpl->saveState();
+    pImpl->resetToInitialState();
+    pImpl->saveState();
 }
 
-void TradingBot::generateBalanceGraph()
-{
+
+void TradingBot::generateBalanceGraph() {
     QLineSeries *series = new QLineSeries();
 
-    for (size_t i = 0; i < balanceHistory.size(); ++i) {
-        series->append(i, balanceHistory[i]);
+    for (size_t i = 0; i < pImpl->balanceHistory.size(); ++i) {
+        series->append(i, pImpl->balanceHistory[i]);
     }
 
     QChart *chart = new QChart();
     chart->addSeries(series);
     chart->createDefaultAxes();
     chart->setTitle("Balance History");
-    chart->setBackgroundBrush(QBrush(Qt::black));
+    chart->setBackgroundBrush(QBrush(Qt::white));
 
-    // Set text color to white for better visibility on black background
-    QPen pen(Qt::white);
-    chart->setTitleBrush(QBrush(Qt::white));
-    chart->axisX()->setLabelsBrush(QBrush(Qt::white));
-    chart->axisY()->setLabelsBrush(QBrush(Qt::white));
+    // Set text color to black for better visibility on white background
+    chart->setTitleBrush(QBrush(Qt::black));
+    chart->axisX()->setLabelsBrush(QBrush(Qt::black));
+    chart->axisY()->setLabelsBrush(QBrush(Qt::black));
 
     // Color the line based on trend
     QLinearGradient gradient(QPointF(0, 0), QPointF(1, 1));
-    for (size_t i = 1; i < balanceHistory.size(); ++i) {
-        qreal pos = i / qreal(balanceHistory.size() - 1);
-        if (balanceHistory[i] >= balanceHistory[i-1]) {
-            gradient.setColorAt(pos, Qt::green);
+    for (size_t i = 1; i < pImpl->balanceHistory.size(); ++i) {
+        qreal pos = i / qreal(pImpl->balanceHistory.size() - 1);
+        if (pImpl->balanceHistory[i] >= pImpl->balanceHistory[i-1]) {
+            gradient.setColorAt(pos, Qt::darkGreen);
         } else {
-            gradient.setColorAt(pos, Qt::red);
+            gradient.setColorAt(pos, Qt::darkRed);
         }
     }
     series->setBrush(gradient);
@@ -496,39 +491,37 @@ void TradingBot::generateBalanceGraph()
 
     // Save as PNG in the TradingSimulation folder
     QPixmap pixmap = chartView->grab();
-    pixmap.save(folderPath + "/balance_history.png");
+    pixmap.save(folderPath + "/" + pImpl->username + "_balance_history.png");
 
     delete chartView;
 }
 
-void TradingBot::generateStockPriceGraph()
-{
+void TradingBot::generateStockPriceGraph() {
     QLineSeries *series = new QLineSeries();
 
-    for (size_t i = 0; i < stockPriceHistory.size(); ++i) {
-        series->append(i, stockPriceHistory[i]);
+    for (size_t i = 0; i < pImpl->stockPriceHistory.size(); ++i) {
+        series->append(i, pImpl->stockPriceHistory[i]);
     }
 
     QChart *chart = new QChart();
     chart->addSeries(series);
     chart->createDefaultAxes();
     chart->setTitle("Stock Price History");
-    chart->setBackgroundBrush(QBrush(Qt::black));
+    chart->setBackgroundBrush(QBrush(Qt::white));
 
-    // Set text color to white for better visibility on black background
-    QPen pen(Qt::white);
-    chart->setTitleBrush(QBrush(Qt::white));
-    chart->axisX()->setLabelsBrush(QBrush(Qt::white));
-    chart->axisY()->setLabelsBrush(QBrush(Qt::white));
+    // Set text color to black for better visibility on white background
+    chart->setTitleBrush(QBrush(Qt::black));
+    chart->axisX()->setLabelsBrush(QBrush(Qt::black));
+    chart->axisY()->setLabelsBrush(QBrush(Qt::black));
 
     // Color the line based on trend
     QLinearGradient gradient(QPointF(0, 0), QPointF(1, 1));
-    for (size_t i = 1; i < stockPriceHistory.size(); ++i) {
-        qreal pos = i / qreal(stockPriceHistory.size() - 1);
-        if (stockPriceHistory[i] >= stockPriceHistory[i-1]) {
-            gradient.setColorAt(pos, Qt::green);
+    for (size_t i = 1; i < pImpl->stockPriceHistory.size(); ++i) {
+        qreal pos = i / qreal(pImpl->stockPriceHistory.size() - 1);
+        if (pImpl->stockPriceHistory[i] >= pImpl->stockPriceHistory[i-1]) {
+            gradient.setColorAt(pos, Qt::darkGreen);
         } else {
-            gradient.setColorAt(pos, Qt::red);
+            gradient.setColorAt(pos, Qt::darkRed);
         }
     }
     series->setBrush(gradient);
@@ -544,13 +537,13 @@ void TradingBot::generateStockPriceGraph()
 
     // Save as PNG in the TradingSimulation folder
     QPixmap pixmap = chartView->grab();
-    pixmap.save(folderPath + "/stock_price_history.png");
+    pixmap.save(folderPath + "/" + pImpl->username + "_stock_price_history.png");
 
     delete chartView;
 }
 
-void TradingBot::generateGraphs()
-{
+void TradingBot::generateGraphs() {
     generateBalanceGraph();
     generateStockPriceGraph();
 }
+
