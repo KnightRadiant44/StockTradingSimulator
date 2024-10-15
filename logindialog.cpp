@@ -50,8 +50,8 @@ void LoginDialog::onCreateAccountClicked()
     }
 
     createAccount(username, password);
-    // After creating the account, you might want to automatically log the user in
-    // or clear the input fields for them to log in manually
+    //After creating the account, you might want to automatically log the user in
+    //or clear the input fields for them to log in manually
     usernameEdit->clear();
     passwordEdit->clear();
 }
@@ -87,7 +87,7 @@ void LoginDialog::createAccount(const QString &username, const QString &password
         return;
     }
 
-    // Check if the username already exists
+    //Check if the username already exists
     QTextStream in(&file);
     while (!in.atEnd()) {
         QString line = in.readLine();
@@ -99,7 +99,7 @@ void LoginDialog::createAccount(const QString &username, const QString &password
         }
     }
 
-    // Append the new user information to the file
+    //Append the new user information to the file
     QTextStream out(&file);
     out << username << ":" << password << "\n";
 

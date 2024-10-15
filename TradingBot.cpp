@@ -20,8 +20,10 @@
 #include <QMainWindow>
 #include <QtCharts>
 
+//Implementation of trading bot
 class TradingBot::TradingBotImpl {
 public:
+    //Constructor
     TradingBotImpl(const QString &username) :
         currentStrategy(nullptr),
         balance(10000),
@@ -46,7 +48,7 @@ public:
         slippageFactor(0.001),
         username(username)
     {
-        // Constructor body
+        //Constructor body
         strategies.push_back(new BuyAndHoldStrategy());
         strategies.push_back(new MeanReversionStrategy());
         strategies.push_back(new TrendFollowingStrategy());
@@ -56,15 +58,16 @@ public:
         QString documentsPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
         tradesFilePath = documentsPath + "/TradingSimulation/" + username + "_trades_taken.txt";
     }
-
+    //Destructor
     ~TradingBotImpl() {
         for (auto strategy : strategies) {
             delete strategy;
         }
         delete riskManager;
-        saveState();  // Save state when the bot is destroyed
+        //Save state when the bot is destroyed
+        saveState();
     }
-
+    //All member variables
     std::vector<TradingStrategy*> strategies;
     TradingStrategy* currentStrategy;
     double balance;
@@ -87,7 +90,7 @@ public:
     double sharpeRatio;
     const double transactionFeePercentage;
     const double slippageFactor;
-
+    //Produces market event to alter market trends
     std::string generateMarketEvent() {
         std::vector<std::string> events = {
             "Major product announcement",
@@ -98,16 +101,16 @@ public:
         };
         return events[std::rand() % events.size()];
     }
-
+    //Applies transaction fee
     double applyTransactionFee(double amount) {
         return amount * (1.0 - transactionFeePercentage);
     }
-
+    //Applies slippage
     double applySlippage(double currentPrice) {
         double slippage = currentPrice * slippageFactor * ((std::rand() % 2 == 0) ? 1 : -1);
         return currentPrice + slippage;
     }
-
+    //Calculates maximum drawdown
     double calculateMaxDrawdown() {
         double peak = balanceHistory[0];
         double maxDrawdown = 0;
@@ -118,19 +121,17 @@ public:
         }
         return maxDrawdown;
     }
-
+    //Calculate different variables
     double calculateCumulativeReturn() {
         double finalValue = balanceHistory.back();
         return (finalValue - initialTotalValue) / initialTotalValue;
     }
-
     double calculateVolatility() {
         std::vector<double> returns;
         for (size_t i = 1; i < balanceHistory.size(); ++i) {
             double dailyReturn = (balanceHistory[i] - balanceHistory[i - 1]) / balanceHistory[i - 1];
             returns.push_back(dailyReturn);
         }
-
         double meanReturn = std::accumulate(returns.begin(), returns.end(), 0.0) / returns.size();
         double variance = 0;
         for (double r : returns) {
@@ -139,12 +140,11 @@ public:
         variance /= returns.size();
         return std::sqrt(variance);
     }
-
     double calculateSharpeRatio(double riskFreeRate = 0.0) {
         double meanReturn = calculateCumulativeReturn() / balanceHistory.size();
         return (meanReturn - riskFreeRate) / volatility;
     }
-
+    //Logs the trade
     void logTrade(int day, double currentPrice, const std::string& tradeAction, double actionTaken) {
         QFile file(tradesFilePath);
         if (file.open(QIODevice::WriteOnly | QIODevice::Append)) {
@@ -156,6 +156,7 @@ public:
             file.close();
         }
     }
+    //Saves the information
     void saveState() {
         QString filePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) +
                            "/TradingSimulation/" + username + "_saved_state.txt";
@@ -181,7 +182,7 @@ public:
             QMessageBox::warning(nullptr, "File Error", "Unable to save state.");
         }
     }
-
+    //Loads the information
     void loadState() {
         QString filePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) +
                            "/TradingSimulation/" + username + "_saved_state.txt";
@@ -226,7 +227,7 @@ public:
             resetToInitialState();
         }
     }
-
+    //Initial Conditions
     void resetToInitialState() {
         balance = 10000.0;
         ownedStocks = 0;
@@ -248,7 +249,6 @@ public:
         stockPriceHistory.clear();
         stockPriceHistory.push_back(market.getPrice());
     }
-
     QString username;
     std::vector<double> stockPriceHistory;
     };
@@ -256,7 +256,7 @@ public:
 
 
 
-// Constructor
+    //Constructor
     TradingBot::TradingBot(const QString &username, QObject *parent)
         : QObject(parent), pImpl(new TradingBotImpl(username)) {
         pImpl->loadState();
@@ -273,7 +273,7 @@ public:
             QMessageBox::warning(nullptr, "Error", "Couldn't open trades_taken.txt file. Please check file permissions.");
         }
     }
-
+//Destructor
 TradingBot::~TradingBot() {
     if (tradeFile.is_open()) {
         tradeFile.close();
@@ -307,7 +307,7 @@ void TradingBot::setStrategy(int index) {
         pImpl->currentStrategy = pImpl->strategies[index];
     }
 }
-
+//Initialises simulation
 void TradingBot::initializeSimulation(int days) {
     pImpl->totalDays = days;
     pImpl->currentDay = 0;
@@ -334,24 +334,24 @@ void TradingBot::initializeSimulation(int days) {
 }
 
 void TradingBot::executeNextDay() {
-    // Update the day and generate market event
+    //Update the day and generate market event
     double currentPrice = pImpl->market.getPrice();
     double totalValue = pImpl->balance + pImpl->ownedStocks * currentPrice;
     pImpl->balanceHistory.push_back(totalValue);
     pImpl->stockPriceHistory.push_back(currentPrice);
     pImpl->currentDay++;
     pImpl->lastMarketEvent = pImpl->generateMarketEvent();
-    // Adjust market conditions and risk based on the event
+    //Adjust market conditions and risk based on the event
     pImpl->market.adjustVolatility(pImpl->lastMarketEvent);
     pImpl->market.adjustOverallTrend(pImpl->lastMarketEvent);
     pImpl->riskManager->adjustRiskTolerance(pImpl->lastMarketEvent);
 
-    // Execute trading strategy
+    //Execute trading strategy
     double action = pImpl->currentStrategy->execute(currentPrice, pImpl->lastMarketEvent);
     double adjustedAction = pImpl->riskManager->adjustPosition(action, currentPrice, pImpl->balance);
     currentPrice = pImpl->applySlippage(currentPrice);
 
-    // Determine trade action based on adjusted action
+    //Determine trade action based on adjusted action
     std::string tradeAction;
     double actionTaken = 0;
     if (adjustedAction > 0) { // Buy
@@ -375,18 +375,18 @@ void TradingBot::executeNextDay() {
         tradeAction = "Sell";
         actionTaken = stocksToSell;
         pImpl->sellsSinceLastUpdate++;
-    } else { // Hold
+    } else { //Hold
         tradeAction = "Hold";
         pImpl->holdsSinceLastUpdate++;
     }
 
-    // Log trade and save the state
+    //Log trade and save the state
     pImpl->logTrade(pImpl->currentDay, currentPrice, tradeAction, actionTaken);
     pImpl->saveState();
 
-    // Update statistics and balance history
+    //Update statistics and balance history
     pImpl->balanceHistory.push_back(totalValue);
-    // pImpl->stockPriceHistory.push_back(currentPrice);
+    //pImpl->stockPriceHistory.push_back(currentPrice);
 
     pImpl->lastUpdateValue = totalValue;
     pImpl->lastUpdateDay = pImpl->currentDay;
@@ -406,10 +406,11 @@ void TradingBot::executeNextDay() {
 }
 
 
-
+//Simulation check
 bool TradingBot::isSimulationComplete() const {
     return pImpl->currentDay >= pImpl->totalDays;
 }
+//Logging information
 void TradingBot::logTrade(int day, double currentPrice, const std::string& tradeAction, double actionTaken) {
     if (tradeFile.is_open()) {
         double totalValue = pImpl->balance + pImpl->ownedStocks * currentPrice;
@@ -419,26 +420,25 @@ void TradingBot::logTrade(int day, double currentPrice, const std::string& trade
                   << " stocks, Balance = $" << std::setw(10) << pImpl->balance
                   << ", Owned Stocks = " << std::setw(4) << pImpl->ownedStocks
                   << ", Total Value = $" << std::setw(10) << totalValue << "\n";
-        tradeFile.flush();  // Ensure the data is written immediately
+        //Ensure the data is written immediately
+        tradeFile.flush();  
     }
 };
 
-
+//Reset the trading bot's state to its initial values
 void TradingBot::resetToInitialState() {
-    // Reset the trading bot's state to its initial values
-
     balanceHistory.clear();
     stockPriceHistory.clear();
 
     balanceHistory.clear();
     stockPriceHistory.clear();
 
-    pImpl->balance = 10000.0;  // Initial balance
-    pImpl->ownedStocks = 0;  // Reset owned stocks
-    pImpl->totalReturn = 0.0;  // Reset total return
-    pImpl->maxDrawdown = 0.0;  // Reset max drawdown
-    pImpl->volatility = 0.0;  // Reset volatility
-    pImpl->sharpeRatio = 0.0;  // Reset Sharpe ratio
+    pImpl->balance = 10000.0;  //Initial balance
+    pImpl->ownedStocks = 0;  //Reset owned stocks
+    pImpl->totalReturn = 0.0;  //Reset total return
+    pImpl->maxDrawdown = 0.0;  //Reset max drawdown
+    pImpl->volatility = 0.0;  //Reset volatility
+    pImpl->sharpeRatio = 0.0;  //Reset Sharpe ratio
     pImpl->lastUpdateValue = pImpl->balance;
     pImpl->lastUpdateDay = 0;
     pImpl->buysSinceLastUpdate = 0;
@@ -454,8 +454,7 @@ void TradingBot::resetToInitialState() {
     pImpl->resetToInitialState();
     pImpl->saveState();
 }
-
-
+//Generates graph of stcok price using QT framework
 void TradingBot::generateStockPriceGraph() {
     QLineSeries *series = new QLineSeries();
 
@@ -496,8 +495,7 @@ void TradingBot::generateStockPriceGraph() {
 
     delete chartView;
 }
-
-
+//Generates graph of user balance using QT framework
 void TradingBot::generateBalanceGraph() {
     QLineSeries *series = new QLineSeries();
 
@@ -539,7 +537,7 @@ void TradingBot::generateBalanceGraph() {
     delete chartView;
 }
 
-
+//Graphing
 void TradingBot::generateGraphs() {
     generateBalanceGraph();
     generateStockPriceGraph();
