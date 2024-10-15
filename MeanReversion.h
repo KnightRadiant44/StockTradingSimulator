@@ -8,6 +8,7 @@ private:
 public:
     //Constructor initalising strategy name
     MeanReversionStrategy() : MarketNeutralStrategy("Mean Reversion") {}
+    //Executes mean reversion strategy
     double execute(double currentPrice, const std::string& marketEvent) override {
         double action = (meanPrice - currentPrice) * 0.01;
         //Adjust mean price and action based on market events
