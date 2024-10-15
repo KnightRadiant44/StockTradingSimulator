@@ -1451,6 +1451,26 @@
      <string>Reset</string>
     </property>
    </widget>
+   <widget class="QGraphicsView" name="StockGraph">
+    <property name="geometry">
+     <rect>
+      <x>187</x>
+      <y>0</y>
+      <width>1041</width>
+      <height>307</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QGraphicsView" name="BalGraph">
+    <property name="geometry">
+     <rect>
+      <x>187</x>
+      <y>305</y>
+      <width>1041</width>
+      <height>305</height>
+     </rect>
+    </property>
+   </widget>
    <zorder>BuyAndHold</zorder>
    <zorder>TradingStrats</zorder>
    <zorder>MeanReversion</zorder>
@@ -1513,6 +1533,8 @@
    <zorder>HelpButton</zorder>
    <zorder>PNLnum_2</zorder>
    <zorder>ResetButton</zorder>
+   <zorder>StockGraph</zorder>
+   <zorder>BalGraph</zorder>
   </widget>
  </widget>
  <resources/>

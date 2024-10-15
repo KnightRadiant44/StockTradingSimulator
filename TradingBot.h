@@ -20,6 +20,7 @@ public:
     ~TradingBot();
     void recordTrade(const std::string& action, double price, int quantity);
     void resetToInitialState();
+    QString username;
 
     // Getters
     double getCurrentPrice() const;

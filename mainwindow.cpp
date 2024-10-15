@@ -8,6 +8,7 @@
 #include "TradingBot.h"
 #include <QStandardPaths>
 #include <QInputDialog>
+#include <QPixmap>
 
 
 MainWindow::MainWindow(const QString &username, QWidget *parent)
@@ -17,10 +18,12 @@ MainWindow::MainWindow(const QString &username, QWidget *parent)
     ui->setupUi(this); // Setup the UI elements
     ui->UserName->setText(username); // Set the username display
 
-
+    ui->StockGraph->setScene(new QGraphicsScene(this));
+    ui->BalGraph->setScene(new QGraphicsScene(this));
     tradingBot = new TradingBot(username,this);
     connect(tradingBot, &TradingBot::updateUI, this, &MainWindow::updateUIFromBot);
     connect(tradingBot, &TradingBot::simulationComplete, this, &MainWindow::onSimulationComplete);
+    connect(tradingBot, &TradingBot::simulationComplete, this, &MainWindow::updateGraphs);
 
     // Connect button signals to corresponding slots
     connect(ui->StartSim, &QPushButton::clicked, this, &MainWindow::onConfirmButtonClicked);
@@ -176,7 +179,6 @@ void MainWindow::onSimulationComplete()
     // Generate graphs
     tradingBot->generateGraphs();
 
-    QMessageBox::information(this, "Simulation Complete", "The trading simulation has finished. Graphs have been generated.");
 
     // Construct the path to trades_taken.txt dynamically
     QString homeDir = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
@@ -192,8 +194,6 @@ void MainWindow::onSimulationComplete()
     } else {
         QMessageBox::warning(this, "File Error", "Unable to open trades_taken.txt");
     }
-
-    // You could add code here to display the generated graphs if desired
 }
 
 // Function to get the selected strategy index
@@ -269,3 +269,43 @@ void MainWindow::OnResetButtonClicked()
 
     QMessageBox::information(this, "Reset Complete", "All values have been reset to their initial states.");
 }
+
+void MainWindow::updateGraphs() {
+    // Load stock graph
+    QString stockGraphPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+                             + "/TradingSimulation/" + username + "_stock_price_history.png";
+    QPixmap stockGraph(stockGraphPath);
+    if (!stockGraph.isNull()) {
+        // Clear any existing items in StockGraph
+        ui->StockGraph->scene()->clear();
+
+        // Create a pixmap item and add it to the existing scene
+        QGraphicsPixmapItem *stockPixmapItem = new QGraphicsPixmapItem(stockGraph);
+        ui->StockGraph->scene()->addItem(stockPixmapItem);
+
+        // Fit the view to the pixmap item
+        ui->StockGraph->fitInView(stockPixmapItem, Qt::KeepAspectRatio);
+    } else {
+        QMessageBox::warning(this, "Error", "Stock graph image could not be loaded.");
+    }
+
+    // Load balance graph
+    QString balanceGraphPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+                               + "/TradingSimulation/" + username + "balance_history.png";
+    QPixmap balanceGraph(balanceGraphPath);
+    if (!balanceGraph.isNull()) {
+        // Clear any existing items in BalGraph
+        ui->BalGraph->scene()->clear();
+
+        // Create a pixmap item and add it to the existing scene
+        QGraphicsPixmapItem *balancePixmapItem = new QGraphicsPixmapItem(balanceGraph);
+        ui->BalGraph->scene()->addItem(balancePixmapItem);
+
+        // Fit the view to the pixmap item
+        ui->BalGraph->fitInView(balancePixmapItem, Qt::KeepAspectRatio);
+    } else {
+        QMessageBox::warning(this, "Error", "Balance graph image could not be loaded.");
+    }
+}
+
+

@@ -260,10 +260,13 @@ public:
     TradingBot::TradingBot(const QString &username, QObject *parent)
         : QObject(parent), pImpl(new TradingBotImpl(username)) {
         pImpl->loadState();
+        pImpl->username = username;
         QString documentsPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
         QString tradingSimFolder = documentsPath + "/TradingSimulation";
         QDir().mkpath(tradingSimFolder);
-        QString tradeFilePath = tradingSimFolder + "/" + username + "_trades_taken.txt";
+        QString tradeFilePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+                                + "/tradingsimulation/"
+                                + username + "_trades_taken.txt";
 
         tradeFile.open(tradeFilePath.toStdString(), std::ios::out | std::ios::app);
         if (!tradeFile.is_open()) {
@@ -320,10 +323,13 @@ void TradingBot::initializeSimulation(int days) {
     pImpl->buysSinceLastUpdate = pImpl->sellsSinceLastUpdate = pImpl->holdsSinceLastUpdate = 0;
     pImpl->totalBuys = pImpl->totalSells = pImpl->totalHolds = 0;
 
-    tradeFile.close();
-    tradeFile.open(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation).toStdString() + "/TradingSimulation/trades_taken.txt", std::ios::out | std::ios::trunc);
+    QString tradeFilePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+                            + "/TradingSimulation/" + pImpl->username + "_trades_taken.txt";
+    tradeFile.open(tradeFilePath.toStdString(), std::ios::out | std::ios::trunc);
+
     if (!tradeFile.is_open()) {
-        QMessageBox::warning(nullptr, "Error", "Couldn't open trades_taken.txt file. Please check file permissions.");
+        QMessageBox::warning(nullptr, "Error",
+                             "Couldn't open " + QString(pImpl->username + "_trades_taken.txt") + " file. Please check file permissions.");
     }
 }
 
@@ -450,52 +456,6 @@ void TradingBot::resetToInitialState() {
 }
 
 
-void TradingBot::generateBalanceGraph() {
-    QLineSeries *series = new QLineSeries();
-
-    for (size_t i = 0; i < pImpl->balanceHistory.size(); ++i) {
-        series->append(i, pImpl->balanceHistory[i]);
-    }
-
-    QChart *chart = new QChart();
-    chart->addSeries(series);
-    chart->createDefaultAxes();
-    chart->setTitle("Balance History");
-    chart->setBackgroundBrush(QBrush(Qt::white));
-
-    // Set text color to black for better visibility on white background
-    chart->setTitleBrush(QBrush(Qt::black));
-    chart->axisX()->setLabelsBrush(QBrush(Qt::black));
-    chart->axisY()->setLabelsBrush(QBrush(Qt::black));
-
-    // Color the line based on trend
-    QLinearGradient gradient(QPointF(0, 0), QPointF(1, 1));
-    for (size_t i = 1; i < pImpl->balanceHistory.size(); ++i) {
-        qreal pos = i / qreal(pImpl->balanceHistory.size() - 1);
-        if (pImpl->balanceHistory[i] >= pImpl->balanceHistory[i-1]) {
-            gradient.setColorAt(pos, Qt::darkGreen);
-        } else {
-            gradient.setColorAt(pos, Qt::darkRed);
-        }
-    }
-    series->setBrush(gradient);
-
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->resize(800, 600);
-
-    // Create TradingSimulation folder in Documents if it doesn't exist
-    QString documentsPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    QString folderPath = documentsPath + "/TradingSimulation";
-    QDir().mkpath(folderPath);
-
-    // Save as PNG in the TradingSimulation folder
-    QPixmap pixmap = chartView->grab();
-    pixmap.save(folderPath + "/" + pImpl->username + "_balance_history.png");
-
-    delete chartView;
-}
-
 void TradingBot::generateStockPriceGraph() {
     QLineSeries *series = new QLineSeries();
 
@@ -508,39 +468,77 @@ void TradingBot::generateStockPriceGraph() {
     chart->createDefaultAxes();
     chart->setTitle("Stock Price History");
     chart->setBackgroundBrush(QBrush(Qt::white));
-
-    // Set text color to black for better visibility on white background
     chart->setTitleBrush(QBrush(Qt::black));
-    chart->axisX()->setLabelsBrush(QBrush(Qt::black));
-    chart->axisY()->setLabelsBrush(QBrush(Qt::black));
+
+    // Update to avoid deprecated methods
+    QList<QAbstractAxis *> axesX = chart->axes(Qt::Horizontal);
+    QList<QAbstractAxis *> axesY = chart->axes(Qt::Vertical);
+    if (!axesX.isEmpty()) axesX.first()->setLabelsBrush(QBrush(Qt::black));
+    if (!axesY.isEmpty()) axesY.first()->setLabelsBrush(QBrush(Qt::black));
 
     // Color the line based on trend
     QLinearGradient gradient(QPointF(0, 0), QPointF(1, 1));
     for (size_t i = 1; i < pImpl->stockPriceHistory.size(); ++i) {
         qreal pos = i / qreal(pImpl->stockPriceHistory.size() - 1);
-        if (pImpl->stockPriceHistory[i] >= pImpl->stockPriceHistory[i-1]) {
-            gradient.setColorAt(pos, Qt::darkGreen);
-        } else {
-            gradient.setColorAt(pos, Qt::darkRed);
-        }
+        gradient.setColorAt(pos, (pImpl->stockPriceHistory[i] >= pImpl->stockPriceHistory[i-1]) ? Qt::darkGreen : Qt::darkRed);
     }
     series->setBrush(gradient);
 
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->resize(800, 600);
+    chartView->resize(1031, 304);
 
-    // Create TradingSimulation folder in Documents if it doesn't exist
-    QString documentsPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    QString folderPath = documentsPath + "/TradingSimulation";
+    QString folderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/TradingSimulation";
     QDir().mkpath(folderPath);
 
-    // Save as PNG in the TradingSimulation folder
     QPixmap pixmap = chartView->grab();
-    pixmap.save(folderPath + "/" + pImpl->username + "_stock_price_history.png");
+    pixmap.save(folderPath + "/" + username + "_stock_price_history.png");
 
     delete chartView;
 }
+
+
+void TradingBot::generateBalanceGraph() {
+    QLineSeries *series = new QLineSeries();
+
+    for (size_t i = 0; i < pImpl->balanceHistory.size(); ++i) {
+        series->append(i, pImpl->balanceHistory[i]);
+    }
+
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->createDefaultAxes();
+    chart->setTitle("Balance History");
+    chart->setBackgroundBrush(QBrush(Qt::white));
+    chart->setTitleBrush(QBrush(Qt::black));
+
+    // Update to avoid deprecated methods
+    QList<QAbstractAxis *> axesX = chart->axes(Qt::Horizontal);
+    QList<QAbstractAxis *> axesY = chart->axes(Qt::Vertical);
+    if (!axesX.isEmpty()) axesX.first()->setLabelsBrush(QBrush(Qt::black));
+    if (!axesY.isEmpty()) axesY.first()->setLabelsBrush(QBrush(Qt::black));
+
+    // Color the line based on trend
+    QLinearGradient gradient(QPointF(0, 0), QPointF(1, 1));
+    for (size_t i = 1; i < pImpl->balanceHistory.size(); ++i) {
+        qreal pos = i / qreal(pImpl->balanceHistory.size() - 1);
+        gradient.setColorAt(pos, (pImpl->balanceHistory[i] >= pImpl->balanceHistory[i-1]) ? Qt::darkGreen : Qt::darkRed);
+    }
+    series->setBrush(gradient);
+
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->resize(1031, 305);
+
+    QString folderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/TradingSimulation";
+    QDir().mkpath(folderPath);
+
+    QPixmap pixmap = chartView->grab();
+    pixmap.save(folderPath + "/" + pImpl->username + "_balance_history.png");
+
+    delete chartView;
+}
+
 
 void TradingBot::generateGraphs() {
     generateBalanceGraph();

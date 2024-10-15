@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include "TradingBot.h"
+#include <QPixmap>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -29,6 +30,7 @@ private:
     Ui::MainWindow *ui;
     TradingBot *tradingBot;
     QTimer *updateTimer;
+    QString username;
 
 
     void promptForStrategyChange();
@@ -51,7 +53,7 @@ private:
     double MarketVolatility;
     std::string CurrentStrategy;
     std::string MarketEvent;
-
+    void updateGraphs();
     // Actions
     int Buys, Sells, Hold;
     int LastBuys, LastSells, LastHolds;
