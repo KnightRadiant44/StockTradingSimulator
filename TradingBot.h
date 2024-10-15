@@ -7,7 +7,8 @@
 #include <vector>
 #include <QtCharts>
 #include <QString>
-
+#include <string>
+#include <vector>
 class TradingStrategy;
 class RiskManagement;
 class Market;
@@ -72,5 +73,10 @@ signals:
     void updateUI();
     void simulationComplete();
 };
+
+
+
+
+
 
 #endif // TRADINGBOT_H

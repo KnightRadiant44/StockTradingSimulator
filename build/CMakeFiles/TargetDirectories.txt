@@ -1,0 +1,9 @@
+/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles/Trading.dir
+/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles/edit_cache.dir
+/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles/rebuild_cache.dir
+/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles/list_install_components.dir
+/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles/install.dir
+/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles/install/local.dir
+/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles/install/strip.dir
+/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles/Trading_autogen_timestamp_deps.dir
+/Users/shxhid01/Downloads/TradingSimulation/build/CMakeFiles/Trading_autogen.dir

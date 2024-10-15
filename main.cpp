@@ -1,4 +1,3 @@
-#include <QApplication>
 #include <QDir>
 #include <QDebug>
 #include "mainwindow.h"
@@ -7,6 +6,7 @@
 #include <QProcess>
 #include <QTextStream>
 #include <QFile>
+
 
 int main(int argc, char *argv[])
 {
@@ -34,6 +34,5 @@ int main(int argc, char *argv[])
     } else {
         qDebug() << "Login canceled or failed";
     }
-
     return 0;
 }

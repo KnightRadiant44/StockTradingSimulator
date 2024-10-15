@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+a4732c0963bd896904f46439591dd25a CMakeFiles/Trading_autogen
+e1227e78cdcaf07116ac7e170effcea9 Trading_autogen/timestamp
