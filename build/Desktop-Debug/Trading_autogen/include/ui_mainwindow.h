@@ -13,6 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QFrame>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
@@ -89,8 +90,10 @@ public:
     QPushButton *HelpButton;
     QLabel *PNLnum_2;
     QPushButton *ResetButton;
-    QButtonGroup *TradeStrats;
+    QGraphicsView *StockGraph;
+    QGraphicsView *BalGraph;
     QButtonGroup *NumDay;
+    QButtonGroup *TradeStrats;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -274,7 +277,7 @@ public:
         Day1000->setAutoRepeat(false);
         Divider2 = new QFrame(centralwidget);
         Divider2->setObjectName("Divider2");
-        Divider2->setGeometry(QRect(200, 0, 261, 800));
+        Divider2->setGeometry(QRect(178, 0, 20, 800));
         Divider2->setFrameShape(QFrame::Shape::VLine);
         Divider2->setFrameShadow(QFrame::Shadow::Sunken);
         UserInfo = new QLabel(centralwidget);
@@ -288,12 +291,12 @@ public:
         UserInfo->setAlignment(Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter);
         UserInfoLine = new QFrame(centralwidget);
         UserInfoLine->setObjectName("UserInfoLine");
-        UserInfoLine->setGeometry(QRect(0, 20, 331, 16));
+        UserInfoLine->setGeometry(QRect(0, 20, 187, 16));
         UserInfoLine->setFrameShape(QFrame::Shape::HLine);
         UserInfoLine->setFrameShadow(QFrame::Shadow::Sunken);
         MidBotLine = new QFrame(centralwidget);
         MidBotLine->setObjectName("MidBotLine");
-        MidBotLine->setGeometry(QRect(327, 600, 901, 20));
+        MidBotLine->setGeometry(QRect(187, 600, 1041, 20));
         MidBotLine->setFrameShape(QFrame::Shape::HLine);
         MidBotLine->setFrameShadow(QFrame::Shadow::Sunken);
         Balance = new QLabel(centralwidget);
@@ -343,7 +346,7 @@ public:
         Bal_User->setAlignment(Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter);
         TradesTakenBox = new QTextBrowser(centralwidget);
         TradesTakenBox->setObjectName("TradesTakenBox");
-        TradesTakenBox->setGeometry(QRect(327, 610, 901, 141));
+        TradesTakenBox->setGeometry(QRect(187, 610, 1041, 141));
         TradesTakenBox->setAutoFillBackground(false);
         TradesTakenBox->setStyleSheet(QString::fromUtf8("TradesTakenBox.setStyleSheet(\"background-color: rgb(50, 50, 50);\");"));
         TradesTakenBox->setFrameShadow(QFrame::Shadow::Plain);
@@ -369,7 +372,7 @@ public:
         MarktInfo->setAlignment(Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter);
         MarketLine = new QFrame(centralwidget);
         MarketLine->setObjectName("MarketLine");
-        MarketLine->setGeometry(QRect(0, 310, 331, 16));
+        MarketLine->setGeometry(QRect(0, 310, 187, 16));
         MarketLine->setFrameShape(QFrame::Shape::HLine);
         MarketLine->setFrameShadow(QFrame::Shadow::Sunken);
         CurrentPrice = new QLabel(centralwidget);
@@ -407,7 +410,7 @@ public:
         PerformanceMetrics->setAlignment(Qt::AlignmentFlag::AlignCenter);
         PerformaceMetricLine = new QFrame(centralwidget);
         PerformaceMetricLine->setObjectName("PerformaceMetricLine");
-        PerformaceMetricLine->setGeometry(QRect(0, 140, 331, 16));
+        PerformaceMetricLine->setGeometry(QRect(0, 140, 187, 16));
         PerformaceMetricLine->setFrameShape(QFrame::Shape::HLine);
         PerformaceMetricLine->setFrameShadow(QFrame::Shadow::Sunken);
         CumReturn = new QLabel(centralwidget);
@@ -481,6 +484,12 @@ public:
         ResetButton->setObjectName("ResetButton");
         ResetButton->setGeometry(QRect(1245, 680, 121, 41));
         ResetButton->setFont(font5);
+        StockGraph = new QGraphicsView(centralwidget);
+        StockGraph->setObjectName("StockGraph");
+        StockGraph->setGeometry(QRect(187, 0, 1041, 307));
+        BalGraph = new QGraphicsView(centralwidget);
+        BalGraph->setObjectName("BalGraph");
+        BalGraph->setGeometry(QRect(187, 305, 1041, 305));
         MainWindow->setCentralWidget(centralwidget);
         BuyAndHold->raise();
         TradingStrats->raise();
@@ -544,6 +553,8 @@ public:
         HelpButton->raise();
         PNLnum_2->raise();
         ResetButton->raise();
+        StockGraph->raise();
+        BalGraph->raise();
 
         retranslateUi(MainWindow);
 

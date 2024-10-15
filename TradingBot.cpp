@@ -534,7 +534,7 @@ void TradingBot::generateBalanceGraph() {
     QDir().mkpath(folderPath);
 
     QPixmap pixmap = chartView->grab();
-    pixmap.save(folderPath + "/" + pImpl->username + "_balance_history.png");
+    pixmap.save(folderPath + "/" + username + "_balance_history.png");
 
     delete chartView;
 }

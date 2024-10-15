@@ -163,7 +163,10 @@ Trading.app/Contents/MacOS/Trading: CMakeFiles/Trading.dir/mainwindow.cpp.o
 Trading.app/Contents/MacOS/Trading: CMakeFiles/Trading.dir/logindialog.cpp.o
 Trading.app/Contents/MacOS/Trading: CMakeFiles/Trading.dir/TradingBot.cpp.o
 Trading.app/Contents/MacOS/Trading: CMakeFiles/Trading.dir/build.make
+Trading.app/Contents/MacOS/Trading: /opt/homebrew/lib/QtCharts.framework/Versions/A/QtCharts
+Trading.app/Contents/MacOS/Trading: /opt/homebrew/lib/QtOpenGLWidgets.framework/Versions/A/QtOpenGLWidgets
 Trading.app/Contents/MacOS/Trading: /opt/homebrew/lib/QtWidgets.framework/Versions/A/QtWidgets
+Trading.app/Contents/MacOS/Trading: /opt/homebrew/lib/QtOpenGL.framework/Versions/A/QtOpenGL
 Trading.app/Contents/MacOS/Trading: /opt/homebrew/lib/QtGui.framework/Versions/A/QtGui
 Trading.app/Contents/MacOS/Trading: /opt/homebrew/lib/QtCore.framework/Versions/A/QtCore
 Trading.app/Contents/MacOS/Trading: CMakeFiles/Trading.dir/link.txt

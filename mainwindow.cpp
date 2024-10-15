@@ -291,7 +291,7 @@ void MainWindow::updateGraphs() {
 
     // Load balance graph
     QString balanceGraphPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
-                               + "/TradingSimulation/" + username + "balance_history.png";
+                               + "/TradingSimulation/" + username + "_balance_history.png";
     QPixmap balanceGraph(balanceGraphPath);
     if (!balanceGraph.isNull()) {
         // Clear any existing items in BalGraph
