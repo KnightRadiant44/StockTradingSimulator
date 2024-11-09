@@ -1,5 +1,0 @@
-# Hashes of file build rules.
-b8627e0d035481c45b910adeb47d4ca3 CMakeFiles/Trading_autogen
-b8627e0d035481c45b910adeb47d4ca3 CMakeFiles/trading_bot_test_autogen
-a0c791a2e52b5db2da5d951d01d07827 Trading_autogen/timestamp
-a816671bad33cedaf3e4bb343212c96f trading_bot_test_autogen/timestamp
