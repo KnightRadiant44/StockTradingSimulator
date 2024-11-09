@@ -1,0 +1,8 @@
+# Mark generated/build files as linguist-generated
+CMakeLists.txt.user* linguist-generated=true
+*.txt.user.* linguist-generated=true
+build/* linguist-generated=true
+
+# Mark C++ as the primary language
+*.cpp linguist-language=C++
+*.h linguist-language=C++
