@@ -1,16 +1,71 @@
-# Stock Trading Simulator 
+# Stock Trading Simulator
 
 ## Description
 
-This project is a **desktop application** developed using Qt Creator and Qt Charts. It **provides a user-friendly interface for simulating trading scenarios using real-time data visualization**. The application is designed to help users **analyze market trends and make informed trading decisions**.
+A Qt-based trading simulator that allows users to test different trading strategies in a simulated market environment. The simulator features automated trading algorithms, interactive price charts, and real-time performance tracking.
 
-## Prerequisites
+## Features
 
-Before you begin, ensure you have met the following requirements:
+- **Multiple Trading Strategies:**
+  - Buy and Hold
+  - Mean Reversion
+  - Trend Following
+  - Moving Average
+  - Random Strategy
 
-- Operating System: MacOs
-- Qt Creator: Version 6.7.3 or higher
-- Qt Charts: Version 6.7.3 or higher
+- **Risk Management:**
+  - Dynamic position sizing
+  - Volatility adjustments
+  - Maximum loss limits
+  - Market event adaptation
+
+- **Real-time Visualization:**
+  - Stock price history charts
+  - Balance history tracking
+  - Performance metrics display
+  - Trading activity logs
+
+- **Market Simulation:**
+  - Dynamic price generation
+  - Market event simulation
+  - Transaction fees and slippage
+  - Volatility adjustments
+
+## Performance Metrics
+- Total return calculation
+- Maximum drawdown tracking
+- Volatility measurement
+- Sharpe ratio analysis
+- Trade history logging
+
+## Project Structure
+
+- `TradingBot`: Main simulation controller
+- `TradingStrategy`: Base class for trading strategies
+- `Market`: Market simulation and price generation
+- `RiskManagement`: Position sizing and risk control
+- `DirectionalStrategy`: Base class for trend-based strategies
+- `MarketNeutralStrategy`: Base class for market-neutral strategies
+
+## Data Storage
+
+The application stores simulation data in the Documents folder under "TradingSimulation":
+- Trade history logs
+- Performance charts
+- Session state data
+- Balance history
+
+## Requirements
+
+### Prerequisites
+- MacOS operating system
+- Qt Creator 6.7.3 or higher
+- Qt Charts module
+
+### Dependencies
+- QtCharts
+- Qt Core libraries
+- C++11 or higher
 
 ## Installation
 
@@ -46,4 +101,3 @@ Qt Charts is typically included with the Qt installation. Ensure you select it d
 
 3. **Run the Project:**
    - Click on the "Run" button or press `Cmd + R` to execute the project.
-
