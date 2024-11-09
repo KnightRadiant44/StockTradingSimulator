@@ -1,8 +1,23 @@
-# Mark generated/build files as linguist-generated
-CMakeLists.txt.user* linguist-generated=true
-*.txt.user.* linguist-generated=true
-build/* linguist-generated=true
-
-# Mark C++ as the primary language
+# Set C++ as the primary language
 *.cpp linguist-language=C++
 *.h linguist-language=C++
+*.hpp linguist-language=C++
+
+# Explicitly mark CMake files
+CMakeLists.txt linguist-language=CMake
+*.cmake linguist-language=CMake
+
+# Mark generated files to be ignored by language statistics
+*.txt.user linguist-generated=true
+*.txt.user.* linguist-generated=true
+build/* linguist-generated=true
+*.ui linguist-generated=true
+.vscode/* linguist-generated=true
+
+# Documentation
+*.md linguist-documentation
+CHANGELOG.md linguist-documentation
+README.md linguist-documentation
+
+# Vendored code (if any)
+third_party/* linguist-vendored
