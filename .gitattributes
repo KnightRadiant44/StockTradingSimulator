@@ -1,23 +1,23 @@
-# Explicitly mark C++ files
+
 *.cpp linguist-language=C++
 *.h linguist-language=C++
 *.hpp linguist-language=C++
 
-# Explicitly mark CMake files
+
 CMakeLists.txt linguist-language=CMake
 *.cmake linguist-language=CMake
 
-# Mark build and generated files to be ignored
+
 build/* linguist-generated=true
 *.ui linguist-generated=true
 .vscode/* linguist-generated=true
 *.txt.user linguist-generated=true
 *.txt.user.* linguist-generated=true
 
-# Documentation files
+
 *.md linguist-documentation
 CHANGELOG.md linguist-documentation
 README.md linguist-documentation
 
-# Vendored code
+
 third_party/* linguist-vendored
